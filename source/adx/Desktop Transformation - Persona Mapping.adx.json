@@ -1,0 +1,1738 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE",
+      "label": "grafana-azure-data-explorer-datasource",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "grafana-azure-data-explorer-datasource",
+      "pluginName": "Azure Data Explorer Datasource"
+    }
+  ],
+  "__elements": {},
+  "__requires": [
+    {
+      "type": "panel",
+      "id": "barchart",
+      "name": "Bar chart",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "dashlist",
+      "name": "Dashboard list",
+      "version": ""
+    },
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "11.6.0"
+    },
+    {
+      "type": "datasource",
+      "id": "grafana-azure-data-explorer-datasource",
+      "name": "Azure Data Explorer Datasource",
+      "version": "6.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "stat",
+      "name": "Stat",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "table",
+      "name": "Table",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "text",
+      "name": "Text",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "timeseries",
+      "name": "Time series",
+      "version": ""
+    }
+  ],
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "panels": [
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 7,
+      "panels": [],
+      "title": "Instructions",
+      "type": "row"
+    },
+    {
+      "gridPos": {
+        "h": 16,
+        "w": 24,
+        "x": 0,
+        "y": 1
+      },
+      "id": 8,
+      "options": {
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
+        },
+        "content": "## 🚀 Desktop Transformation - Persona Mapping\n\nThis dashboard provides a comprehensive overview of **application inventory, usage, and performance** — essential data for planning and executing **desktop transformation initiatives**.\n\nInstead of assigning all users full personal virtual machines, you can use this data to:\n- Identify which apps are **actually used**\n- Understand the **performance impact** of those apps\n- Group users with similar needs\n- Deliver more **cost-effective, tailored desktop experiences**\n\n---\n\n## 🔍 Dashboard Structure — Each Row Answers a Key Question\n\n1. **What apps are installed?**  \n   → View all applications detected across endpoints and virtual machines.\n\n2. **What apps are used?**  \n   → Discover which apps are in foreground, how often, and by whom.\n\n3. **How well do these apps perform?**  \n   → Examine CPU, RAM, disk, and more metrics per app to gauge ressource consumption.\n\n4. **How are browsers being used?**  \n   → Analyze browser usage patterns to find candidates that can be assigned a browser only.\n\n---\n\n> 💡 Use filters at the top to narrow down by machine, app name, user, or time range.  \n> This dashboard helps you match **application needs to user personas**, and transition from \"one size fits all\" desktops to **right-sized solutions**.\n",
+        "mode": "markdown"
+      },
+      "pluginVersion": "11.6.0",
+      "type": "text"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 17
+      },
+      "id": 9,
+      "panels": [
+        {
+          "datasource": {
+            "type": "grafana-azure-data-explorer-datasource",
+            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "fixed"
+              },
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 3,
+            "w": 6,
+            "x": 0,
+            "y": 18
+          },
+          "id": 10,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "percentChangeColorMode": "standard",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showPercentChange": false,
+            "textMode": "auto",
+            "wideLayout": true
+          },
+          "pluginVersion": "11.6.0",
+          "targets": [
+            {
+              "OpenAI": false,
+              "clusterUri": "$cluster",
+              "database": "$database",
+              "datasource": {
+                "type": "grafana-azure-data-explorer-datasource",
+                "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+              },
+              "expression": {
+                "groupBy": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "reduce": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "where": {
+                  "expressions": [],
+                  "type": "and"
+                }
+              },
+              "pluginVersion": "6.0.0",
+              "query": "Application_ApplicationInventory\r\n| where $__timeFilter(Timestamp)\r\n| summarize count_distinct(Host)",
+              "querySource": "raw",
+              "queryType": "KQL",
+              "rawMode": true,
+              "refId": "A",
+              "resultFormat": "table"
+            }
+          ],
+          "title": "Unique machines",
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "grafana-azure-data-explorer-datasource",
+            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "fixed"
+              },
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 3,
+            "w": 6,
+            "x": 6,
+            "y": 18
+          },
+          "id": 21,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "percentChangeColorMode": "standard",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showPercentChange": false,
+            "textMode": "auto",
+            "wideLayout": true
+          },
+          "pluginVersion": "11.6.0",
+          "targets": [
+            {
+              "OpenAI": false,
+              "clusterUri": "$cluster",
+              "database": "$database",
+              "datasource": {
+                "type": "grafana-azure-data-explorer-datasource",
+                "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+              },
+              "expression": {
+                "groupBy": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "reduce": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "where": {
+                  "expressions": [],
+                  "type": "and"
+                }
+              },
+              "pluginVersion": "6.0.0",
+              "query": "Application_ApplicationInventory\r\n| where $__timeFilter(Timestamp)\r\n| summarize count_distinct(Publisher)",
+              "querySource": "raw",
+              "queryType": "KQL",
+              "rawMode": true,
+              "refId": "A",
+              "resultFormat": "table"
+            }
+          ],
+          "title": "Unique publishers",
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "grafana-azure-data-explorer-datasource",
+            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "fixed"
+              },
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 3,
+            "w": 6,
+            "x": 12,
+            "y": 18
+          },
+          "id": 11,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "percentChangeColorMode": "standard",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showPercentChange": false,
+            "textMode": "auto",
+            "wideLayout": true
+          },
+          "pluginVersion": "11.6.0",
+          "targets": [
+            {
+              "OpenAI": false,
+              "clusterUri": "$cluster",
+              "database": "$database",
+              "datasource": {
+                "type": "grafana-azure-data-explorer-datasource",
+                "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+              },
+              "expression": {
+                "groupBy": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "reduce": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "where": {
+                  "expressions": [],
+                  "type": "and"
+                }
+              },
+              "pluginVersion": "6.0.0",
+              "query": "Application_ApplicationInventory\r\n| where $__timeFilter(Timestamp)\r\n| summarize count_distinct(DisplayName)",
+              "querySource": "raw",
+              "queryType": "KQL",
+              "rawMode": true,
+              "refId": "A",
+              "resultFormat": "table"
+            }
+          ],
+          "title": "Unique apps",
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "grafana-azure-data-explorer-datasource",
+            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+          },
+          "description": "The total number of times any app appears across all devices",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "fixed"
+              },
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 3,
+            "w": 6,
+            "x": 18,
+            "y": 18
+          },
+          "id": 12,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "percentChangeColorMode": "standard",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showPercentChange": false,
+            "textMode": "auto",
+            "wideLayout": true
+          },
+          "pluginVersion": "11.6.0",
+          "targets": [
+            {
+              "OpenAI": false,
+              "clusterUri": "$cluster",
+              "database": "$database",
+              "datasource": {
+                "type": "grafana-azure-data-explorer-datasource",
+                "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+              },
+              "expression": {
+                "groupBy": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "reduce": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "where": {
+                  "expressions": [],
+                  "type": "and"
+                }
+              },
+              "pluginVersion": "6.0.0",
+              "query": "Application_ApplicationInventory\r\n| where $__timeFilter(Timestamp)\r\n| summarize count()",
+              "querySource": "raw",
+              "queryType": "KQL",
+              "rawMode": true,
+              "refId": "A",
+              "resultFormat": "table"
+            }
+          ],
+          "title": "Total app installations",
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "grafana-azure-data-explorer-datasource",
+            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "fillOpacity": 80,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineWidth": 1,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "decimals": 0,
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 10,
+            "w": 12,
+            "x": 0,
+            "y": 21
+          },
+          "id": 13,
+          "options": {
+            "barRadius": 0,
+            "barWidth": 0.97,
+            "fullHighlight": false,
+            "groupWidth": 0.7,
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": false
+            },
+            "orientation": "horizontal",
+            "showValue": "never",
+            "stacking": "none",
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
+            },
+            "xTickLabelRotation": 0,
+            "xTickLabelSpacing": 0
+          },
+          "pluginVersion": "11.6.0",
+          "targets": [
+            {
+              "OpenAI": false,
+              "clusterUri": "$cluster",
+              "database": "$database",
+              "datasource": {
+                "type": "grafana-azure-data-explorer-datasource",
+                "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+              },
+              "expression": {
+                "groupBy": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "reduce": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "where": {
+                  "expressions": [],
+                  "type": "and"
+                }
+              },
+              "pluginVersion": "6.0.0",
+              "query": "Application_ApplicationInventory\r\n| where $__timeFilter(Timestamp)\r\n| summarize install_count = count_distinct(Host) by DisplayName\r\n| top 10 by install_count desc",
+              "querySource": "raw",
+              "queryType": "KQL",
+              "rawMode": true,
+              "refId": "A",
+              "resultFormat": "table"
+            }
+          ],
+          "title": "Install count per app (top 10)",
+          "type": "barchart"
+        },
+        {
+          "datasource": {
+            "type": "grafana-azure-data-explorer-datasource",
+            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "fixedColor": "orange",
+                "mode": "fixed"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "fillOpacity": 80,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineWidth": 1,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "decimals": 0,
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 10,
+            "w": 12,
+            "x": 12,
+            "y": 21
+          },
+          "id": 14,
+          "options": {
+            "barRadius": 0,
+            "barWidth": 0.97,
+            "fullHighlight": false,
+            "groupWidth": 0.7,
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": false
+            },
+            "orientation": "horizontal",
+            "showValue": "never",
+            "stacking": "none",
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
+            },
+            "xTickLabelRotation": 0,
+            "xTickLabelSpacing": 0
+          },
+          "pluginVersion": "11.6.0",
+          "targets": [
+            {
+              "OpenAI": false,
+              "clusterUri": "$cluster",
+              "database": "$database",
+              "datasource": {
+                "type": "grafana-azure-data-explorer-datasource",
+                "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+              },
+              "expression": {
+                "groupBy": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "reduce": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "where": {
+                  "expressions": [],
+                  "type": "and"
+                }
+              },
+              "pluginVersion": "6.0.0",
+              "query": "Application_ApplicationInventory\r\n| where $__timeFilter(Timestamp)\r\n| summarize install_count = count_distinct(Host) by Publisher\r\n| top 10 by install_count desc",
+              "querySource": "raw",
+              "queryType": "KQL",
+              "rawMode": true,
+              "refId": "A",
+              "resultFormat": "table"
+            }
+          ],
+          "title": "Install count per publisher (top 10)",
+          "type": "barchart"
+        },
+        {
+          "datasource": {
+            "type": "grafana-azure-data-explorer-datasource",
+            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "custom": {
+                "align": "auto",
+                "cellOptions": {
+                  "type": "auto",
+                  "wrapText": false
+                },
+                "filterable": true,
+                "inspect": false
+              },
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 13,
+            "w": 24,
+            "x": 0,
+            "y": 31
+          },
+          "id": 15,
+          "options": {
+            "cellHeight": "sm",
+            "footer": {
+              "countRows": true,
+              "enablePagination": true,
+              "fields": "",
+              "reducer": [
+                "count"
+              ],
+              "show": true
+            },
+            "showHeader": true
+          },
+          "pluginVersion": "11.6.0",
+          "targets": [
+            {
+              "OpenAI": false,
+              "clusterUri": "$cluster",
+              "database": "$database",
+              "datasource": {
+                "type": "grafana-azure-data-explorer-datasource",
+                "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+              },
+              "expression": {
+                "groupBy": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "reduce": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "where": {
+                  "expressions": [],
+                  "type": "and"
+                }
+              },
+              "pluginVersion": "6.0.0",
+              "query": "Application_ApplicationInventory\r\n| where $__timeFilter(Timestamp)\r\n| summarize \r\nby Host, App = DisplayName, Version = DisplayVersion, Publisher = Publisher, Install_date = InstallDate, Install_location = InstallLocation\r\n| sort by Host asc, App asc, Version asc\r\n",
+              "querySource": "raw",
+              "queryType": "KQL",
+              "rawMode": true,
+              "refId": "A",
+              "resultFormat": "table"
+            }
+          ],
+          "title": "Data table",
+          "type": "table"
+        }
+      ],
+      "title": "What apps are installed?",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 18
+      },
+      "id": 6,
+      "panels": [
+        {
+          "datasource": {
+            "type": "grafana-azure-data-explorer-datasource",
+            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+          },
+          "description": "Foreground apps are your most important ones. They are not only installed and running in the background, they are actively used by your users.",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "Count",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "bars",
+                "fillOpacity": 100,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 19
+          },
+          "id": 1,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "right",
+              "showLegend": true
+            },
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "11.6.0",
+          "targets": [
+            {
+              "OpenAI": false,
+              "clusterUri": "$cluster",
+              "database": "$database",
+              "datasource": {
+                "type": "grafana-azure-data-explorer-datasource",
+                "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+              },
+              "expression": {
+                "groupBy": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "reduce": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "where": {
+                  "expressions": [],
+                  "type": "and"
+                }
+              },
+              "pluginVersion": "6.0.0",
+              "query": "Session_SessionDetail\r\n| where $__timeFilter(Timestamp)\r\n| where SessionFgProcessName != \"\"\r\n| summarize Count = count() by bin(Timestamp, $time_agg), SessionFgAppId\r\n| evaluate pivot(SessionFgAppId, sum(Count))\r\n| sort by Timestamp",
+              "querySource": "raw",
+              "queryType": "KQL",
+              "rawMode": true,
+              "refId": "A",
+              "resultFormat": "table"
+            }
+          ],
+          "title": "App foreground usage",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "grafana-azure-data-explorer-datasource",
+            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+          },
+          "description": "Lists all versions, users and computers by app, whether in foreground or not. Columns can be filtered.\n\nClick on an app to filter the charts below.",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "custom": {
+                "align": "auto",
+                "cellOptions": {
+                  "type": "auto"
+                },
+                "filterable": true,
+                "inspect": false
+              },
+              "links": [],
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "App"
+                },
+                "properties": [
+                  {
+                    "id": "links",
+                    "value": [
+                      {
+                        "title": "Filter dashboard",
+                        "url": "d/${__dashboard.uid}﻿/desktop-transformation-persona-mapping?var-Computer=${Computer}&var-User=${User}&var-App=${__data.fields[\"App\"]}"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 13,
+            "w": 24,
+            "x": 0,
+            "y": 27
+          },
+          "id": 5,
+          "options": {
+            "cellHeight": "sm",
+            "footer": {
+              "countRows": true,
+              "enablePagination": true,
+              "fields": "",
+              "reducer": [
+                "count"
+              ],
+              "show": true
+            },
+            "showHeader": true,
+            "sortBy": [
+              {
+                "desc": true,
+                "displayName": "Users"
+              }
+            ]
+          },
+          "pluginVersion": "11.6.0",
+          "targets": [
+            {
+              "OpenAI": false,
+              "clusterUri": "$cluster",
+              "database": "$database",
+              "datasource": {
+                "type": "grafana-azure-data-explorer-datasource",
+                "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+              },
+              "expression": {
+                "groupBy": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "reduce": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "where": {
+                  "expressions": [],
+                  "type": "and"
+                }
+              },
+              "pluginVersion": "6.0.0",
+              "query": "Process_ProcessDetail\r\n| where $__timeFilter(Timestamp)\r\n| where AppId !in (\"Microsoft Windows OS\",\"MsWnOS\",\"macOS\") \r\n| where ProcUser !in (\"sys\",\"nvc\",\"lvc\")\r\n| where AppId has \"$App\"\r\n| summarize \r\nVersions = count_distinct(AppVersion),\r\nUsers = count_distinct(ProcUser),\r\nHosts = count_distinct(Host)\r\nby App = AppId\r\n| sort by App asc\r\n",
+              "querySource": "raw",
+              "queryType": "KQL",
+              "rawMode": true,
+              "refId": "A",
+              "resultFormat": "table"
+            }
+          ],
+          "title": "App usage data table",
+          "type": "table"
+        },
+        {
+          "datasource": {
+            "type": "grafana-azure-data-explorer-datasource",
+            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 13,
+            "w": 24,
+            "x": 0,
+            "y": 40
+          },
+          "id": 16,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "11.6.0",
+          "targets": [
+            {
+              "OpenAI": false,
+              "clusterUri": "$cluster",
+              "database": "$database",
+              "datasource": {
+                "type": "grafana-azure-data-explorer-datasource",
+                "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+              },
+              "expression": {
+                "groupBy": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "reduce": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "where": {
+                  "expressions": [],
+                  "type": "and"
+                }
+              },
+              "pluginVersion": "6.0.0",
+              "query": "Process_ProcessDetail\r\n| where $__timeFilter(Timestamp)\r\n| where SessionID > 0\r\n| where AppId !in~ (\"Microsoft Windows OS\",\"MsWnOS\",\"macOS\") \r\n| where ProcUser !in~ (\"sys\",\"nvc\",\"lvc\")\r\n| where AppId has \"$App\"\r\n| summarize usage = count_distinct(ProcUser) by bin(Timestamp, $time_agg), AppId\r\n| evaluate pivot(AppId, max(usage))\r\n",
+              "querySource": "raw",
+              "queryType": "KQL",
+              "rawMode": true,
+              "refId": "A",
+              "resultFormat": "table"
+            }
+          ],
+          "title": "Usage over time",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "grafana-azure-data-explorer-datasource",
+            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+          },
+          "description": "Select an app in the data table above to filter this chart.",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "custom": {
+                "align": "auto",
+                "cellOptions": {
+                  "type": "auto"
+                },
+                "filterable": true,
+                "inspect": false
+              },
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 14,
+            "w": 24,
+            "x": 0,
+            "y": 53
+          },
+          "id": 17,
+          "options": {
+            "cellHeight": "sm",
+            "footer": {
+              "countRows": true,
+              "enablePagination": true,
+              "fields": "",
+              "reducer": [
+                "count"
+              ],
+              "show": true
+            },
+            "showHeader": true
+          },
+          "pluginVersion": "11.6.0",
+          "targets": [
+            {
+              "OpenAI": false,
+              "clusterUri": "$cluster",
+              "database": "$database",
+              "datasource": {
+                "type": "grafana-azure-data-explorer-datasource",
+                "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+              },
+              "expression": {
+                "groupBy": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "reduce": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "where": {
+                  "expressions": [],
+                  "type": "and"
+                }
+              },
+              "pluginVersion": "6.0.0",
+              "query": "Process_ProcessDetail\r\n| where $__timeFilter(Timestamp)\r\n| where AppId !in (\"Microsoft Windows OS\",\"MsWnOS\",\"macOS\") \r\n| where ProcUser !in (\"sys\",\"nvc\",\"lvc\")\r\n| where AppId has \"$App\"\r\n| summarize \r\nby App = AppId, Version = AppVersion, User = ProcUser, Machine = Host\r\n| sort by App asc, Version asc, User asc \r\n",
+              "querySource": "raw",
+              "queryType": "KQL",
+              "rawMode": true,
+              "refId": "A",
+              "resultFormat": "table"
+            }
+          ],
+          "title": "Usage detail",
+          "type": "table"
+        }
+      ],
+      "title": "What apps are used?",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 19
+      },
+      "id": 18,
+      "panels": [
+        {
+          "fieldConfig": {
+            "defaults": {},
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 2,
+            "w": 24,
+            "x": 0,
+            "y": 94
+          },
+          "id": 20,
+          "options": {
+            "code": {
+              "language": "plaintext",
+              "showLineNumbers": false,
+              "showMiniMap": false
+            },
+            "content": "App performance is part of the **Troubleshooting Poor User Experience** dashboard. You can access it via the link below. ",
+            "mode": "markdown"
+          },
+          "pluginVersion": "11.6.0",
+          "title": "",
+          "type": "text"
+        },
+        {
+          "fieldConfig": {
+            "defaults": {},
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 3,
+            "w": 24,
+            "x": 0,
+            "y": 112
+          },
+          "id": 19,
+          "options": {
+            "includeVars": false,
+            "keepTime": false,
+            "maxItems": 10,
+            "query": "troubleshooting poor user experience",
+            "showFolderNames": false,
+            "showHeadings": false,
+            "showRecentlyViewed": false,
+            "showSearch": true,
+            "showStarred": false,
+            "tags": []
+          },
+          "pluginVersion": "11.6.0",
+          "title": "",
+          "type": "dashlist"
+        }
+      ],
+      "title": "App performance",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 20
+      },
+      "id": 22,
+      "panels": [
+        {
+          "datasource": {
+            "type": "grafana-azure-data-explorer-datasource",
+            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+          },
+          "description": "Shows all users who had a browser in foreground more than ${browser_usage_threshold}% of the time. The threshold can be set at the dashboard's top.",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "custom": {
+                "align": "auto",
+                "cellOptions": {
+                  "type": "auto"
+                },
+                "filterable": true,
+                "inspect": false
+              },
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "percent"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 21
+          },
+          "id": 23,
+          "options": {
+            "cellHeight": "sm",
+            "footer": {
+              "countRows": false,
+              "enablePagination": true,
+              "fields": "",
+              "reducer": [
+                "sum"
+              ],
+              "show": false
+            },
+            "showHeader": true,
+            "sortBy": [
+              {
+                "desc": false,
+                "displayName": "SessionUser_s"
+              }
+            ]
+          },
+          "pluginVersion": "11.6.0",
+          "targets": [
+            {
+              "OpenAI": false,
+              "clusterUri": "$cluster",
+              "database": "$database",
+              "datasource": {
+                "type": "grafana-azure-data-explorer-datasource",
+                "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+              },
+              "expression": {
+                "groupBy": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "reduce": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "where": {
+                  "expressions": [],
+                  "type": "and"
+                }
+              },
+              "pluginVersion": "6.0.0",
+              "query": "Session_SessionDetail\r\n| where $__timeFilter(Timestamp)\r\n| summarize \r\ncount_fg_app = count()\r\nby SessionFgProcessName, SessionUser\r\n| join kind=inner (\r\n    Session_SessionDetail\r\n    | summarize event_count = count() by SessionUser\r\n) on SessionUser\r\n| extend app_in_foreground_percent = round( todouble(count_fg_app) / todouble(event_count) * 100, 1 )\r\n| where SessionFgProcessName in~ (\"chrome.exe\",\"msedge.exe\",\"firefox.exe\",\"iexplore.exe\",\"CitrixEnterpriseBrowser.exe\")\r\n| where app_in_foreground_percent >= $browser_usage_threshold\r\n| project user = SessionUser, browser = SessionFgProcessName, foreground = app_in_foreground_percent\r\n",
+              "querySource": "raw",
+              "queryType": "KQL",
+              "rawMode": true,
+              "refId": "A",
+              "resultFormat": "table"
+            }
+          ],
+          "title": "Browser in foreground >= ${browser_usage_threshold}%",
+          "type": "table"
+        },
+        {
+          "datasource": {
+            "type": "grafana-azure-data-explorer-datasource",
+            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+          },
+          "description": "If the foreground window is a browser: the URL of the active tab.",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "custom": {
+                "align": "auto",
+                "cellOptions": {
+                  "type": "auto"
+                },
+                "filterable": true,
+                "inspect": false
+              },
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 29
+          },
+          "id": 24,
+          "options": {
+            "cellHeight": "sm",
+            "footer": {
+              "countRows": false,
+              "enablePagination": true,
+              "fields": "",
+              "reducer": [
+                "sum"
+              ],
+              "show": false
+            },
+            "showHeader": true,
+            "sortBy": [
+              {
+                "desc": false,
+                "displayName": "SessionUser_s"
+              }
+            ]
+          },
+          "pluginVersion": "11.6.0",
+          "targets": [
+            {
+              "OpenAI": false,
+              "clusterUri": "$cluster",
+              "database": "$database",
+              "datasource": {
+                "type": "grafana-azure-data-explorer-datasource",
+                "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+              },
+              "expression": {
+                "groupBy": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "reduce": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "where": {
+                  "expressions": [],
+                  "type": "and"
+                }
+              },
+              "pluginVersion": "6.0.0",
+              "query": "Session_SessionDetail\r\n| where $__timeFilter(Timestamp)\r\n| where SessionFgBrowserActiveTabHost != \"\"\r\n| summarize \r\ncount = count()\r\nby web_app = SessionFgBrowserActiveTabHost\r\n| sort by count desc\r\n",
+              "querySource": "raw",
+              "queryType": "KQL",
+              "rawMode": true,
+              "refId": "A",
+              "resultFormat": "table"
+            }
+          ],
+          "title": "Used web apps",
+          "type": "table"
+        }
+      ],
+      "title": "How are browsers being used?",
+      "type": "row"
+    }
+  ],
+  "schemaVersion": 41,
+  "tags": [
+    "uberAgent",
+    "Azure Data Explorer"
+  ],
+  "templating": {
+    "list": [
+      {
+        "allowCustomValue": false,
+        "current": {},
+        "label": "Datasource",
+        "name": "datasource",
+        "options": [],
+        "query": "grafana-azure-data-explorer-datasource",
+        "refresh": 1,
+        "regex": "",
+        "type": "datasource"
+      },
+      {
+        "allowCustomValue": false,
+        "current": {},
+        "datasource": {
+          "type": "grafana-azure-data-explorer-datasource",
+          "uid": "${datasource}"
+        },
+        "definition": "",
+        "label": "Cluster",
+        "name": "cluster",
+        "options": [],
+        "query": {
+          "azureLogAnalytics": {
+            "query": "",
+            "resources": []
+          },
+          "clusterUri": "",
+          "database": "",
+          "queryType": "Clusters",
+          "refId": "A",
+          "subscription": ""
+        },
+        "refresh": 1,
+        "regex": "",
+        "type": "query"
+      },
+      {
+        "allowCustomValue": false,
+        "current": {},
+        "datasource": {
+          "type": "grafana-azure-data-explorer-datasource",
+          "uid": "${datasource}"
+        },
+        "definition": "",
+        "label": "Database",
+        "name": "database",
+        "options": [],
+        "query": {
+          "azureLogAnalytics": {
+            "query": "",
+            "resources": []
+          },
+          "clusterUri": "$cluster",
+          "database": "",
+          "queryType": "Databases",
+          "refId": "A",
+          "subscription": ""
+        },
+        "refresh": 1,
+        "regex": "",
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {
+          "text": "",
+          "value": ""
+        },
+        "description": "Filter the dashboard to usernames or parts of username. I.e. \"jo\" would include the users \"joe\" and \"john\".",
+        "name": "User",
+        "options": [
+          {
+            "selected": true,
+            "text": "",
+            "value": ""
+          }
+        ],
+        "query": "",
+        "type": "textbox"
+      },
+      {
+        "current": {
+          "text": "",
+          "value": ""
+        },
+        "description": "Filter the dashboard to computer names or parts of computer names. I.e. \"pc\" would include the computers \"pc1\" and \"pc-test\".",
+        "label": "Machine",
+        "name": "Computer",
+        "options": [
+          {
+            "selected": true,
+            "text": "",
+            "value": ""
+          }
+        ],
+        "query": "",
+        "type": "textbox"
+      },
+      {
+        "current": {
+          "text": "",
+          "value": ""
+        },
+        "description": "Filter the dashboard to an app or parts of app names. I.e. \"my\" would include the apps \"my-dev-app\" and \"my-hr-app\".\n\nNote that app names may differ for inventory, usage, and foreground usage, as uberAgent's source in the operating system differs. While an app can be named \"Vendor MyApp\" in inventory, it may be named just \"MyApp\" when in foreground. Hence, use this filter with caution.",
+        "name": "App",
+        "options": [
+          {
+            "selected": true,
+            "text": "",
+            "value": ""
+          }
+        ],
+        "query": "",
+        "type": "textbox"
+      },
+      {
+        "current": {
+          "text": "0",
+          "value": "0"
+        },
+        "description": "",
+        "label": "Browser usage threshold",
+        "name": "browser_usage_threshold",
+        "options": [
+          {
+            "selected": true,
+            "text": "0",
+            "value": "0"
+          }
+        ],
+        "query": "0",
+        "type": "textbox"
+      },
+      {
+        "current": {
+          "text": "15m",
+          "value": "15m"
+        },
+        "label": "Time aggregation",
+        "name": "time_agg",
+        "options": [
+          {
+            "selected": false,
+            "text": "1m",
+            "value": "1m"
+          },
+          {
+            "selected": false,
+            "text": "5m",
+            "value": "5m"
+          },
+          {
+            "selected": false,
+            "text": "10m",
+            "value": "10m"
+          },
+          {
+            "selected": true,
+            "text": "15m",
+            "value": "15m"
+          },
+          {
+            "selected": false,
+            "text": "30m",
+            "value": "30m"
+          },
+          {
+            "selected": false,
+            "text": "1h",
+            "value": "1h"
+          },
+          {
+            "selected": false,
+            "text": "1d",
+            "value": "1d"
+          }
+        ],
+        "query": "1m,5m,,10m,15m,30m,1h,1d",
+        "type": "custom"
+      }
+    ]
+  },
+  "time": {
+    "from": "now/d",
+    "to": "now/d"
+  },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "Desktop Transformation - Persona Mapping",
+  "uid": "",
+  "version": 1,
+  "weekStart": ""
+}

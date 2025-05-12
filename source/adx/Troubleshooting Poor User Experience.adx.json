@@ -1,0 +1,4886 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE",
+      "label": "grafana-azure-data-explorer-datasource",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "grafana-azure-data-explorer-datasource",
+      "pluginName": "Azure Data Explorer Datasource"
+    }
+  ],
+  "__elements": {},
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "11.6.0"
+    },
+    {
+      "type": "datasource",
+      "id": "grafana-azure-data-explorer-datasource",
+      "name": "Azure Data Explorer Datasource",
+      "version": "6.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "table",
+      "name": "Table",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "text",
+      "name": "Text",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "timeseries",
+      "name": "Time series",
+      "version": ""
+    }
+  ],
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "panels": [
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 13,
+      "panels": [],
+      "title": "Instructions",
+      "type": "row"
+    },
+    {
+      "gridPos": {
+        "h": 20,
+        "w": 24,
+        "x": 0,
+        "y": 1
+      },
+      "id": 12,
+      "options": {
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
+        },
+        "content": "## 🎯 Troubleshooting Poor User Experience\n\nDiagnosing poor user experience in virtual sessions is complex — it requires analyzing multiple layers such as input responsiveness, protocol performance, system load, and network conditions. This dashboard helps simplify that process.\n\nStart by identifying sessions with **high session delay** (input delay + protocol latency), then use the lower panels to investigate **root causes** like app or network performance issues.\n\n> 💡 **Tip:** Click on a username in any data table to **filter the entire dashboard** to that specific user's session.\n\n---\n\n## 🧮 Why Percentiles Matter\n\nMost metrics in this dashboard (e.g. input delay, protocol latency, CPU, RAM, Disk) are calculated using the **80th percentile**, rather than the average or maximum.\n\n- The **80th percentile** means: \"80% of the time, values were below this number.\"\n- It helps **ignore brief spikes**, while still highlighting **consistently poor performance**.\n- It's more realistic for assessing **typical user experience** than using averages.\n\n---\n\n## 🧪 What Is Session Delay?\n\n**Session Delay** = **User Input Delay** + **Protocol Latency**\n\n- **Protocol Latency**: Measures network-related delay in remoting protocols like ICA or RDP.\n- **User Input Delay**: Captures the time between user input (e.g. keypress) and the moment it is picked up by the application — a direct indicator of system/app responsiveness.\n\n---\n\n## 📊 How To Interpret Session Delay\n\nSession delay categories used in this dashboard:\n\n- 🟢 **Excellent**: consistently **below 40 ms**\n- 🔵 **Good**: mostly below 40 ms, always **below 200 ms**\n- 🟡 **Mediocre**: consistently **below 400 ms**\n- 🔴 **Poor**: frequently **above 400 ms**\n\n> ℹ️ [More info on user input delay](https://uberagent.com/blog/uberagent-7-1-preview-user-input-delay-application-responsiveness/)",
+        "mode": "markdown"
+      },
+      "pluginVersion": "11.6.0",
+      "transparent": true,
+      "type": "text"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 21
+      },
+      "id": 17,
+      "panels": [
+        {
+          "datasource": {
+            "type": "grafana-azure-data-explorer-datasource",
+            "uid": "${datasource}"
+          },
+          "description": "The 80th percentile of protocol latency + input delay for all sessions. Gauges the overall user experience.",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": true,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "dashed+area"
+                }
+              },
+              "fieldMinMax": false,
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "blue",
+                    "value": 40
+                  },
+                  {
+                    "color": "#EAB839",
+                    "value": 200
+                  },
+                  {
+                    "color": "red",
+                    "value": 400
+                  }
+                ]
+              },
+              "unit": "ms"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 17,
+            "x": 0,
+            "y": 22
+          },
+          "id": 10,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": false
+            },
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "11.6.0",
+          "targets": [
+            {
+              "OpenAI": false,
+              "clusterUri": "$cluster",
+              "database": "$database",
+              "datasource": {
+                "type": "grafana-azure-data-explorer-datasource",
+                "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+              },
+              "expression": {
+                "groupBy": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "reduce": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "where": {
+                  "expressions": [],
+                  "type": "and"
+                }
+              },
+              "pluginVersion": "6.0.0",
+              "query": "Session_SessionDetail\r\n| where $__timeFilter(Timestamp)\r\n| where SessionUser != \"sys\"\r\n| where SessionUser contains \"$User\"\r\n| where Host contains \"$Computer\"\r\n| extend delay = SessionInputDelaySumMs/SessionInputDelayCount\r\n| summarize \r\ndelay = percentile(delay,80),\r\nSessionRpLatencyMs =  percentile(column_ifexists(\"SessionRpLatencyMs\", 0),80)\r\nby bin(Timestamp, $time_agg)\r\n| extend session_delay = delay + SessionRpLatencyMs\r\n| project-away delay, SessionRpLatencyMs\r\n\r\n\r\n",
+              "querySource": "raw",
+              "queryType": "KQL",
+              "rawMode": true,
+              "refId": "A",
+              "resultFormat": "table"
+            }
+          ],
+          "title": "Session delay overview",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "grafana-azure-data-explorer-datasource",
+            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "fixed"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "bars",
+                "fillOpacity": 100,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": true,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "decimals": 0,
+              "fieldMinMax": false,
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 7,
+            "x": 17,
+            "y": 22
+          },
+          "id": 34,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": false
+            },
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "11.6.0",
+          "targets": [
+            {
+              "OpenAI": false,
+              "clusterUri": "$cluster",
+              "database": "$database",
+              "datasource": {
+                "type": "grafana-azure-data-explorer-datasource",
+                "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+              },
+              "expression": {
+                "groupBy": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "reduce": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "where": {
+                  "expressions": [],
+                  "type": "and"
+                }
+              },
+              "pluginVersion": "6.0.0",
+              "query": "Session_SessionDetail\r\n| where $__timeFilter(Timestamp)\r\n| where SessionUser != \"sys\"\r\n| summarize \r\nsession_count = count_distinct(SessionGUID)\r\nby bin(Timestamp, $time_agg)\r\n| sort by Timestamp",
+              "querySource": "raw",
+              "queryType": "KQL",
+              "rawMode": true,
+              "refId": "A",
+              "resultFormat": "table"
+            }
+          ],
+          "title": "Session count",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "grafana-azure-data-explorer-datasource",
+            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+          },
+          "description": "The table lists all sessions in the selected timeframe, sorted by session delay. Click on a session to filter the dashboard.",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "custom": {
+                "align": "auto",
+                "cellOptions": {
+                  "type": "auto"
+                },
+                "filterable": true,
+                "inspect": false
+              },
+              "fieldMinMax": false,
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "#6ED0E0",
+                    "value": 40
+                  },
+                  {
+                    "color": "#EAB839",
+                    "value": 200
+                  },
+                  {
+                    "color": "red",
+                    "value": 400
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "user_without_ad"
+                },
+                "properties": [
+                  {
+                    "id": "custom.hidden",
+                    "value": true
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "machine"
+                },
+                "properties": [
+                  {
+                    "id": "custom.hidden",
+                    "value": true
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "user_machine"
+                },
+                "properties": [
+                  {
+                    "id": "links",
+                    "value": [
+                      {
+                        "title": "Filter dashboard",
+                        "url": "d/${__dashboard.uid}/user-session-performance?var-Computer=${__data.fields[\"machine\"]}&var-User=${__data.fields[\"user_without_ad\"]}&var-App=${App}"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "custom.minWidth",
+                    "value": 200
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "session_delay"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "ms"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "logon"
+                },
+                "properties": [
+                  {
+                    "id": "custom.minWidth",
+                    "value": 240
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 10,
+            "w": 24,
+            "x": 0,
+            "y": 29
+          },
+          "id": 18,
+          "options": {
+            "cellHeight": "sm",
+            "footer": {
+              "countRows": false,
+              "fields": "",
+              "reducer": [
+                "sum"
+              ],
+              "show": false
+            },
+            "showHeader": true
+          },
+          "pluginVersion": "11.6.0",
+          "targets": [
+            {
+              "OpenAI": false,
+              "clusterUri": "$cluster",
+              "database": "$database",
+              "datasource": {
+                "type": "grafana-azure-data-explorer-datasource",
+                "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+              },
+              "expression": {
+                "groupBy": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "reduce": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "where": {
+                  "expressions": [],
+                  "type": "and"
+                }
+              },
+              "pluginVersion": "6.0.0",
+              "query": "Session_SessionDetail\r\n| where $__timeFilter(Timestamp)\r\n| where SessionUser != \"sys\"\r\n| where SessionUser contains \"$User\"\r\n| where Host contains \"$Computer\"\r\n| extend delay = SessionInputDelaySumMs / SessionInputDelayCount\r\n| summarize \r\nuser = max(SessionUser),\r\nmachine = max(Host),\r\nlogon = max(SessionLogonTime),\r\nprotocol = max(SessionProtocol),\r\nstate = max(SessionConnectionState),\r\nclient_ip = max(column_ifexists(\"SessionClientIp\",\"\")),\r\nclient_name = max(column_ifexists(\"SessionClientName\",\"\")),\r\nclient_os = max(column_ifexists(\"SessionClientPlatform\",\"\")),\r\nclient_version = max(column_ifexists(\"SessionClientVersion\",\"\")),\r\nctx_transport = max(column_ifexists(\"SessionTransportProtocols\",\"\")),\r\nctx_apps = max(column_ifexists(\"SessionPublishedAppsCtx\",\"\")),\r\nid = max(SessionID),\r\ndelay = percentile(delay,80),\r\nSessionRpLatencyMs =  percentile(column_ifexists(\"SessionRpLatencyMs\", 0),80)\r\nby SessionGUID\r\n| extend user_machine = strcat(user,\"@\",machine)\r\n| extend user_without_ad = replace(@\"^[^\\\\]+\\\\\", \"\", user)\r\n| extend session_delay = delay + SessionRpLatencyMs\r\n| project user_machine, session_id = id, session_delay, state, logon, protocol, client_ip, client_name, client_os, client_version, user_without_ad, machine, ctx_transport, ctx_apps\r\n| sort by session_delay desc \r\n\r\n\r\n",
+              "querySource": "raw",
+              "queryType": "KQL",
+              "rawMode": true,
+              "refId": "A",
+              "resultFormat": "table"
+            }
+          ],
+          "title": "Session table",
+          "type": "table"
+        },
+        {
+          "datasource": {
+            "type": "grafana-azure-data-explorer-datasource",
+            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+          },
+          "description": "The 80th percentile of protocol latency + input delay per session",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineStyle": {
+                  "fill": "solid"
+                },
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": true,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "dashed+area"
+                }
+              },
+              "fieldMinMax": false,
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "blue",
+                    "value": 40
+                  },
+                  {
+                    "color": "#EAB839",
+                    "value": 200
+                  },
+                  {
+                    "color": "red",
+                    "value": 400
+                  }
+                ]
+              },
+              "unit": "ms"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 39
+          },
+          "id": 15,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "right",
+              "showLegend": true
+            },
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "11.6.0",
+          "targets": [
+            {
+              "OpenAI": false,
+              "clusterUri": "$cluster",
+              "database": "$database",
+              "datasource": {
+                "type": "grafana-azure-data-explorer-datasource",
+                "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+              },
+              "expression": {
+                "groupBy": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "reduce": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "where": {
+                  "expressions": [],
+                  "type": "and"
+                }
+              },
+              "pluginVersion": "6.0.0",
+              "query": "Session_SessionDetail\r\n| where $__timeFilter(Timestamp)\r\n| where SessionUser != \"sys\"\r\n| where SessionUser contains '$User'\r\n| where Host contains \"$Computer\"\r\n| extend delay = SessionInputDelaySumMs / SessionInputDelayCount\r\n| summarize \r\ndelay = percentile(delay,80),\r\nSessionRpLatencyMs =  percentile(column_ifexists(\"SessionRpLatencyMs\", 0),80),\r\nuser = max(SessionUser),\r\nhost = max(Host),\r\nid = max(SessionID)\r\nby bin(Timestamp, $time_agg), SessionGUID\r\n| extend user_host = strcat(user, \"(\", id, \")\",\"@\",host)\r\n| extend user_without_ad = replace(@\"^[^\\\\]+\\\\\", \"\", user)\r\n| extend latency_p80 = delay + SessionRpLatencyMs\r\n| project-away delay, SessionRpLatencyMs, SessionGUID, id\r\n| evaluate pivot(user_host, max(latency_p80))\r\n\r\n",
+              "querySource": "raw",
+              "queryType": "KQL",
+              "rawMode": true,
+              "refId": "A",
+              "resultFormat": "table"
+            }
+          ],
+          "title": "Delay per session over time",
+          "type": "timeseries"
+        },
+        {
+          "fieldConfig": {
+            "defaults": {},
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 24,
+            "x": 0,
+            "y": 47
+          },
+          "id": 46,
+          "options": {
+            "code": {
+              "language": "plaintext",
+              "showLineNumbers": false,
+              "showMiniMap": false
+            },
+            "content": "The charts below split the **session delay** in its components: **protocol latency** and **input delay**.\n\n## High protocol latency\n\nProtocol latency is the time it takes to send a request to the VDA, or the computer where uberAgent is running on, and receive a response. A high value indicates network issues or not enough bandwidth.\n\nSpecifically for ICA sessions, the **ICA RTT** chart shows the time between user action and screen response, including ICA latency, endpoint delay, and host delay.\n\n## High input delay\n\nHigh input delay indicates that the VDA, or the computer where uberAgent is installed, has not enough resources available to process the request. It is worth checking the machine and app compute charts below, to see if the machine is overloaded or if an app is consuming too much CPU or memory.\n",
+            "mode": "markdown"
+          },
+          "pluginVersion": "11.6.0",
+          "title": "",
+          "transparent": true,
+          "type": "text"
+        },
+        {
+          "datasource": {
+            "type": "grafana-azure-data-explorer-datasource",
+            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": true,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "dashed+area"
+                }
+              },
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "blue",
+                    "value": 40
+                  },
+                  {
+                    "color": "#EAB839",
+                    "value": 200
+                  },
+                  {
+                    "color": "red",
+                    "value": 400
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 54
+          },
+          "id": 36,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "right",
+              "showLegend": true
+            },
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "11.6.0",
+          "targets": [
+            {
+              "OpenAI": false,
+              "clusterUri": "$cluster",
+              "database": "$database",
+              "datasource": {
+                "type": "grafana-azure-data-explorer-datasource",
+                "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+              },
+              "expression": {
+                "groupBy": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "reduce": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "where": {
+                  "expressions": [],
+                  "type": "and"
+                }
+              },
+              "pluginVersion": "6.0.0",
+              "query": "Session_SessionDetail\r\n| where $__timeFilter(Timestamp)\r\n| where SessionUser != \"sys\"\r\n| where SessionUser contains '$User'\r\n| where Host contains \"$Computer\"\r\n| summarize \r\nprotocol_latency =  percentile(column_ifexists(\"SessionRpLatencyMs\", 0),80),\r\nuser = max(SessionUser),\r\nhost = max(Host),\r\nid = max(SessionID)\r\nby bin(Timestamp, $time_agg), SessionGUID\r\n| extend user_host = strcat(user, \"(\", id, \")\",\"@\",host)\r\n| project-away  SessionGUID, id\r\n| evaluate pivot(user_host, max(protocol_latency))\r\n\r\n\r\n\r\n\r\n",
+              "querySource": "raw",
+              "queryType": "KQL",
+              "rawMode": true,
+              "refId": "A",
+              "resultFormat": "table"
+            }
+          ],
+          "title": "Protocol latency",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "grafana-azure-data-explorer-datasource",
+            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": true,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "dashed+area"
+                }
+              },
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "blue",
+                    "value": 40
+                  },
+                  {
+                    "color": "light-orange",
+                    "value": 200
+                  },
+                  {
+                    "color": "red",
+                    "value": 400
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 62
+          },
+          "id": 37,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "right",
+              "showLegend": true
+            },
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "11.6.0",
+          "targets": [
+            {
+              "OpenAI": false,
+              "clusterUri": "$cluster",
+              "database": "$database",
+              "datasource": {
+                "type": "grafana-azure-data-explorer-datasource",
+                "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+              },
+              "expression": {
+                "groupBy": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "reduce": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "where": {
+                  "expressions": [],
+                  "type": "and"
+                }
+              },
+              "pluginVersion": "6.0.0",
+              "query": "Session_SessionDetail\r\n| where $__timeFilter(Timestamp)\r\n| where SessionUser != \"sys\"\r\n| where SessionUser contains '$User'\r\n| where Host contains \"$Computer\"\r\n| summarize \r\nrtt = max(column_ifexists(\"SessionRoundTripTimeMs\",0)),\r\nuser = max(SessionUser),\r\nhost = max(Host),\r\nid = max(SessionID)\r\nby bin(Timestamp, $time_agg), SessionGUID\r\n| extend user_host = strcat(user, \"(\", id, \")\",\"@\",host)\r\n| project-away  SessionGUID, id\r\n| evaluate pivot(user_host, max(rtt))\r\n\r\n\r\n\r\n\r\n",
+              "querySource": "raw",
+              "queryType": "KQL",
+              "rawMode": true,
+              "refId": "A",
+              "resultFormat": "table"
+            }
+          ],
+          "title": "ICA RTT",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "grafana-azure-data-explorer-datasource",
+            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": true,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "dashed+area"
+                }
+              },
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "blue",
+                    "value": 40
+                  },
+                  {
+                    "color": "#EAB839",
+                    "value": 200
+                  },
+                  {
+                    "color": "red",
+                    "value": 400
+                  }
+                ]
+              },
+              "unit": "ms"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 70
+          },
+          "id": 35,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "right",
+              "showLegend": true
+            },
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "11.6.0",
+          "targets": [
+            {
+              "OpenAI": false,
+              "clusterUri": "$cluster",
+              "database": "$database",
+              "datasource": {
+                "type": "grafana-azure-data-explorer-datasource",
+                "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+              },
+              "expression": {
+                "groupBy": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "reduce": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "where": {
+                  "expressions": [],
+                  "type": "and"
+                }
+              },
+              "pluginVersion": "6.0.0",
+              "query": "Session_SessionDetail\r\n| where $__timeFilter(Timestamp)\r\n| where SessionUser != \"sys\"\r\n| where SessionUser contains '$User'\r\n| where Host contains \"$Computer\"\r\n| extend delay = SessionInputDelaySumMs / SessionInputDelayCount\r\n| summarize \r\ndelay = percentile(delay,80),\r\nuser = max(SessionUser),\r\nhost = max(Host),\r\nid = max(SessionID)\r\nby bin(Timestamp, $time_agg), SessionGUID\r\n| extend user_host = strcat(user, \"(\", id, \")\",\"@\",host)\r\n| project-away  SessionGUID, id\r\n| evaluate pivot(user_host, max(delay))\r\n\r\n\r\n\r\n\r\n",
+              "querySource": "raw",
+              "queryType": "KQL",
+              "rawMode": true,
+              "refId": "A",
+              "resultFormat": "table"
+            }
+          ],
+          "title": "Input delay",
+          "type": "timeseries"
+        }
+      ],
+      "title": "Session metrics",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 22
+      },
+      "id": 38,
+      "panels": [
+        {
+          "datasource": {
+            "type": "grafana-azure-data-explorer-datasource",
+            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+          },
+          "description": "Stop errors are blue screens, power losses, and kernel panics (macOS).\n\nMore about error codes (Windows): https://learn.microsoft.com/en-us/windows-hardware/drivers/debugger/bug-check-code-reference2",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "custom": {
+                "align": "auto",
+                "cellOptions": {
+                  "type": "auto"
+                },
+                "inspect": false
+              },
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 79
+          },
+          "id": 39,
+          "options": {
+            "cellHeight": "sm",
+            "footer": {
+              "countRows": false,
+              "fields": "",
+              "reducer": [
+                "sum"
+              ],
+              "show": false
+            },
+            "showHeader": true
+          },
+          "pluginVersion": "11.6.0",
+          "targets": [
+            {
+              "OpenAI": false,
+              "clusterUri": "$cluster",
+              "database": "$database",
+              "datasource": {
+                "type": "grafana-azure-data-explorer-datasource",
+                "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+              },
+              "expression": {
+                "groupBy": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "reduce": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "where": {
+                  "expressions": [],
+                  "type": "and"
+                }
+              },
+              "pluginVersion": "6.0.0",
+              "query": "let BugCheckLookup = datatable(BugcheckCode:double , BugName:string) [\r\n    1,  \"APC_INDEX_MISMATCH\",\r\n    2,  \"DEVICE_QUEUE_NOT_BUSY\",\r\n    3,  \"INVALID_AFFINITY_SET\",\r\n    4,  \"INVALID_DATA_ACCESS_TRAP\",\r\n    5,  \"INVALID_PROCESS_ATTACH_ATTEMPT\",\r\n    6,  \"INVALID_PROCESS_DETACH_ATTEMPT\",\r\n    7,  \"INVALID_SOFTWARE_INTERRUPT\",\r\n    8,  \"IRQL_NOT_DISPATCH_LEVEL\",\r\n    9,  \"IRQL_NOT_GREATER_OR_EQUAL\",\r\n    10, \"IRQL_NOT_LESS_OR_EQUAL\",\r\n    11, \"NO_EXCEPTION_HANDLING_SUPPORT\",\r\n    12, \"MAXIMUM_WAIT_OBJECTS_EXCEEDED\",\r\n    13, \"MUTEX_LEVEL_NUMBER_VIOLATION\",\r\n    14, \"NO_USER_MODE_CONTEXT\",\r\n    15, \"SPIN_LOCK_ALREADY_OWNED\",\r\n    16, \"SPIN_LOCK_NOT_OWNED\",\r\n    17, \"THREAD_NOT_MUTEX_OWNER\",\r\n    18, \"TRAP_CAUSE_UNKNOWN\",\r\n    19, \"EMPTY_THREAD_REAPER_LIST\",\r\n    20, \"CREATE_DELETE_LOCK_NOT_LOCKED\",\r\n    21, \"LAST_CHANCE_CALLED_FROM_KMODE\",\r\n    22, \"CID_HANDLE_CREATION\",\r\n    23, \"CID_HANDLE_DELETION\",\r\n    24, \"REFERENCE_BY_POINTER\",\r\n    25, \"BAD_POOL_HEADER\",\r\n    26, \"MEMORY_MANAGEMENT\",\r\n    27, \"PFN_SHARE_COUNT\",\r\n    28, \"PFN_REFERENCE_COUNT\",\r\n    29, \"NO_SPIN_LOCK_AVAILABLE\",\r\n    30, \"KMODE_EXCEPTION_NOT_HANDLED\",\r\n    31, \"SHARED_RESOURCE_CONV_ERROR\",\r\n    32, \"KERNEL_APC_PENDING_DURING_EXIT\",\r\n    33, \"QUOTA_UNDERFLOW\",\r\n    34, \"FILE_SYSTEM\",\r\n    35, \"FAT_FILE_SYSTEM\",\r\n    36, \"NTFS_FILE_SYSTEM\",\r\n    37, \"NPFS_FILE_SYSTEM\",\r\n    38, \"CDFS_FILE_SYSTEM\",\r\n    39, \"RDR_FILE_SYSTEM\",\r\n    40, \"CORRUPT_ACCESS_TOKEN\",\r\n    41, \"SECURITY_SYSTEM\",\r\n    42, \"INCONSISTENT_IRP\",\r\n    43, \"PANIC_STACK_SWITCH\",\r\n    44, \"PORT_DRIVER_INTERNAL\",\r\n    45, \"SCSI_DISK_DRIVER_INTERNAL\",\r\n    46, \"DATA_BUS_ERROR\",\r\n    47, \"INSTRUCTION_BUS_ERROR\",\r\n    48, \"SET_OF_INVALID_CONTEXT\",\r\n    49, \"PHASE0_INITIALIZATION_FAILED\",\r\n    50, \"PHASE1_INITIALIZATION_FAILED\",\r\n    51, \"UNEXPECTED_INITIALIZATION_CALL\",\r\n    52, \"CACHE_MANAGER\",\r\n    53, \"NO_MORE_IRP_STACK_LOCATIONS\",\r\n    54, \"DEVICE_REFERENCE_COUNT_NOT_ZERO\",\r\n    55, \"FLOPPY_INTERNAL_ERROR\",\r\n    56, \"SERIAL_DRIVER_INTERNAL\",\r\n    57, \"SYSTEM_EXIT_OWNED_MUTEX\",\r\n    58, \"SYSTEM_UNWIND_PREVIOUS_USER\",\r\n    59, \"SYSTEM_SERVICE_EXCEPTION\",\r\n    60, \"INTERRUPT_UNWIND_ATTEMPTED\",\r\n    61, \"INTERRUPT_EXCEPTION_NOT_HANDLED\",\r\n    62, \"MULTIPROCESSOR_CONFIGURATION_NOT_SUPPORTED\",\r\n    63, \"NO_MORE_SYSTEM_PTES\",\r\n    64, \"TARGET_MDL_TOO_SMALL\",\r\n    65, \"MUST_SUCCEED_POOL_EMPTY\",\r\n    66, \"ATDISK_DRIVER_INTERNAL\",\r\n    67, \"NO_SUCH_PARTITION\",\r\n    68, \"MULTIPLE_IRP_COMPLETE_REQUESTS\",\r\n    69, \"INSUFFICIENT_SYSTEM_MAP_REGS\",\r\n    70, \"DEREF_UNKNOWN_LOGON_SESSION\",\r\n    71, \"REF_UNKNOWN_LOGON_SESSION\",\r\n    72, \"CANCEL_STATE_IN_COMPLETED_IRP\",\r\n    73, \"PAGE_FAULT_WITH_INTERRUPTS_OFF\",\r\n    74, \"IRQL_GT_ZERO_AT_SYSTEM_SERVICE\",\r\n    75, \"STREAMS_INTERNAL_ERROR\",\r\n    76, \"FATAL_UNHANDLED_HARD_ERROR\",\r\n    77, \"NO_PAGES_AVAILABLE\",\r\n    78, \"PFN_LIST_CORRUPT\",\r\n    79, \"NDIS_INTERNAL_ERROR\",\r\n    80, \"PAGE_FAULT_IN_NONPAGED_AREA\",\r\n    81, \"REGISTRY_ERROR\",\r\n    82, \"MAILSLOT_FILE_SYSTEM\",\r\n    83, \"NO_BOOT_DEVICE\",\r\n    84, \"LM_SERVER_INTERNAL_ERROR\",\r\n    85, \"DATA_COHERENCY_EXCEPTION\",\r\n    86, \"INSTRUCTION_COHERENCY_EXCEPTION\",\r\n    87, \"XNS_INTERNAL_ERROR\",\r\n    88, \"FTDISK_INTERNAL_ERROR\",\r\n    89, \"PINBALL_FILE_SYSTEM\",\r\n    90, \"CRITICAL_SERVICE_FAILED\",\r\n    91, \"SET_ENV_VAR_FAILED\",\r\n    92, \"HAL_INITIALIZATION_FAILED\",\r\n    93, \"UNSUPPORTED_PROCESSOR\",\r\n    94, \"OBJECT_INITIALIZATION_FAILED\",\r\n    95, \"SECURITY_INITIALIZATION_FAILED\",\r\n    96, \"PROCESS_INITIALIZATION_FAILED\",\r\n    97, \"HAL1_INITIALIZATION_FAILED\",\r\n    98, \"OBJECT1_INITIALIZATION_FAILED\",\r\n    99, \"SECURITY1_INITIALIZATION_FAILED\",\r\n    100,\"SYMBOLIC_INITIALIZATION_FAILED\",\r\n    101,\"MEMORY1_INITIALIZATION_FAILED\",\r\n    102,\"CACHE_INITIALIZATION_FAILED\",\r\n    103,\"CONFIG_INITIALIZATION_FAILED\",\r\n    104,\"FILE_INITIALIZATION_FAILED\",\r\n    105,\"IO1_INITIALIZATION_FAILED\",\r\n    106,\"LPC_INITIALIZATION_FAILED\",\r\n    107,\"PROCESS1_INITIALIZATION_FAILED\",\r\n    108,\"REFMON_INITIALIZATION_FAILED\",\r\n    109,\"SESSION1_INITIALIZATION_FAILED\",\r\n    110,\"SESSION2_INITIALIZATION_FAILED\",\r\n    111,\"SESSION3_INITIALIZATION_FAILED\",\r\n    112,\"SESSION4_INITIALIZATION_FAILED\",\r\n    113,\"SESSION5_INITIALIZATION_FAILED\",\r\n    114,\"ASSIGN_DRIVE_LETTERS_FAILED\",\r\n    115,\"CONFIG_LIST_FAILED\",\r\n    116,\"BAD_SYSTEM_CONFIG_INFO\",\r\n    117,\"CANNOT_WRITE_CONFIGURATION\",\r\n    118,\"PROCESS_HAS_LOCKED_PAGES\",\r\n    119,\"KERNEL_STACK_INPAGE_ERROR\",\r\n    120,\"PHASE0_EXCEPTION\",\r\n    121,\"MISMATCHED_HAL\",\r\n    122,\"KERNEL_DATA_INPAGE_ERROR\",\r\n    123,\"INACCESSIBLE_BOOT_DEVICE\",\r\n    124,\"BUGCODE_NDIS_DRIVER\",\r\n    125,\"INSTALL_MORE_MEMORY\",\r\n    126,\"SYSTEM_THREAD_EXCEPTION_NOT_HANDLED\",\r\n    127,\"UNEXPECTED_KERNEL_MODE_TRAP\",\r\n    128,\"NMI_HARDWARE_FAILURE\",\r\n    129,\"SPIN_LOCK_INIT_FAILURE\",\r\n    130,\"DFS_FILE_SYSTEM\",\r\n    133,\"SETUP_FAILURE\",\r\n    139,\"MBR_CHECKSUM_MISMATCH\",\r\n    142,\"KERNEL_MODE_EXCEPTION_NOT_HANDLED\",\r\n    143,\"PP0_INITIALIZATION_FAILED\",\r\n    144,\"PP1_INITIALIZATION_FAILED\",\r\n    146,\"UP_DRIVER_ON_MP_SYSTEM\",\r\n    147,\"INVALID_KERNEL_HANDLE\",\r\n    148,\"KERNEL_STACK_LOCKED_AT_EXIT\",\r\n    150,\"INVALID_WORK_QUEUE_ITEM\",\r\n    151,\"BOUND_IMAGE_UNSUPPORTED\",\r\n    152,\"END_OF_NT_EVALUATION_PERIOD\",\r\n    153,\"INVALID_REGION_OR_SEGMENT\",\r\n    154,\"SYSTEM_LICENSE_VIOLATION\",\r\n    155,\"UDFS_FILE_SYSTEM\",\r\n    156,\"MACHINE_CHECK_EXCEPTION\",\r\n    158,\"USER_MODE_HEALTH_MONITOR\",\r\n    159,\"DRIVER_POWER_STATE_FAILURE\",\r\n    160,\"INTERNAL_POWER_ERROR\",\r\n    161,\"PCI_BUS_DRIVER_INTERNAL\",\r\n    162,\"MEMORY_IMAGE_CORRUPT\",\r\n    163,\"ACPI_DRIVER_INTERNAL\",\r\n    164,\"CNSS_FILE_SYSTEM_FILTER\",\r\n    165,\"ACPI_BIOS_ERROR\",\r\n    167,\"BAD_EXHANDLE\",\r\n    171,\"SESSION_HAS_VALID_POOL_ON_EXIT\",\r\n    172,\"HAL_MEMORY_ALLOCATION\",\r\n    173,\"VIDEO_DRIVER_DEBUG_REPORT_REQUEST\",\r\n    177,\"BGI_DETECTED_VIOLATION\",\r\n    180,\"VIDEO_DRIVER_INIT_FAILURE\",\r\n    184,\"ATTEMPTED_SWITCH_FROM_DPC\",\r\n    185,\"CHIPSET_DETECTED_ERROR\",\r\n    186,\"SESSION_HAS_VALID_VIEWS_ON_EXIT\",\r\n    187,\"NETWORK_BOOT_INITIALIZATION_FAILED\",\r\n    188,\"NETWORK_BOOT_DUPLICATE_ADDRESS\",\r\n    189,\"INVALID_HIBERNATED_STATE\",\r\n    190,\"ATTEMPTED_WRITE_TO_READONLY_MEMORY\",\r\n    191,\"MUTEX_ALREADY_OWNED\",\r\n    193,\"SPECIAL_POOL_DETECTED_MEMORY_CORRUPTION\",\r\n    194,\"BAD_POOL_CALLER\",\r\n    196,\"DRIVER_VERIFIER_DETECTED_VIOLATION\",\r\n    197,\"DRIVER_CORRUPTED_EXPOOL\",\r\n    198,\"DRIVER_CAUGHT_MODIFYING_FREED_POOL\",\r\n    199,\"TIMER_OR_DPC_INVALID\",\r\n    200,\"IRQL_UNEXPECTED_VALUE\",\r\n    201,\"DRIVER_VERIFIER_IOMANAGER_VIOLATION\",\r\n    202,\"PNP_DETECTED_FATAL_ERROR\",\r\n    203,\"DRIVER_LEFT_LOCKED_PAGES_IN_PROCESS\",\r\n    204,\"PAGE_FAULT_IN_FREED_SPECIAL_POOL\",\r\n    205,\"PAGE_FAULT_BEYOND_END_OF_ALLOCATION\",\r\n    206,\"DRIVER_UNLOADED_WITHOUT_CANCELLING_PENDING_OPERATIONS\",\r\n    207,\"TERMINAL_SERVER_DRIVER_MADE_INCORRECT_MEMORY_REFERENCE\",\r\n    208,\"DRIVER_CORRUPTED_MMPOOL\",\r\n    209,\"DRIVER_IRQL_NOT_LESS_OR_EQUAL\",\r\n    210,\"BUGCODE_ID_DRIVER\",\r\n    211,\"DRIVER_PORTION_MUST_BE_NONPAGED\",\r\n    212,\"SYSTEM_SCAN_AT_RAISED_IRQL_CAUGHT_IMPROPER_DRIVER_UNLOAD\",\r\n    213,\"DRIVER_PAGE_FAULT_IN_FREED_SPECIAL_POOL\",\r\n    214,\"DRIVER_PAGE_FAULT_BEYOND_END_OF_ALLOCATION\",\r\n    215,\"DRIVER_UNMAPPING_INVALID_VIEW\",\r\n    216,\"DRIVER_USED_EXCESSIVE_PTES\",\r\n    217,\"LOCKED_PAGES_TRACKER_CORRUPTION\",\r\n    218,\"SYSTEM_PTE_MISUSE\",\r\n    219,\"DRIVER_CORRUPTED_SYSPTES\",\r\n    220,\"DRIVER_INVALID_STACK_ACCESS\",\r\n    222,\"POOL_CORRUPTION_IN_FILE_AREA\",\r\n    223,\"IMPERSONATING_WORKER_THREAD\",\r\n    224,\"ACPI_BIOS_FATAL_ERROR\",\r\n    225,\"WORKER_THREAD_RETURNED_AT_BAD_IRQL\",\r\n    226,\"MANUALLY_INITIATED_CRASH\",\r\n    227,\"RESOURCE_NOT_OWNED\",\r\n    228,\"WORKER_INVALID\",\r\n    230,\"DRIVER_VERIFIER_DMA_VIOLATION\",\r\n    231,\"INVALID_FLOATING_POINT_STATE\",\r\n    232,\"INVALID_CANCEL_OF_FILE_OPEN\",\r\n    233,\"ACTIVE_EX_WORKER_THREAD_TERMINATION\",\r\n    234,\"THREAD_STUCK_IN_DEVICE_DRIVER\",\r\n    235,\"DIRTY_MAPPED_PAGES_CONGESTION\",\r\n    236,\"SESSION_HAS_VALID_SPECIAL_POOL_ON_EXIT\",\r\n    237,\"UNMOUNTABLE_BOOT_VOLUME\",\r\n    239,\"CRITICAL_PROCESS_DIED\",\r\n    241,\"SCSI_VERIFIER_DETECTED_VIOLATION\",\r\n    242,\"HARDWARE_INTERRUPT_STORM\",\r\n    243,\"DISORDERLY_SHUTDOWN\",\r\n    244,\"CRITICAL_OBJECT_TERMINATION\",\r\n    245,\"FLTMGR_FILE_SYSTEM\",\r\n    246,\"PCI_VERIFIER_DETECTED_VIOLATION\",\r\n    247,\"DRIVER_OVERRAN_STACK_BUFFER\",\r\n    248,\"RAMDISK_BOOT_INITIALIZATION_FAILED\",\r\n    249,\"DRIVER_RETURNED_STATUS_REPARSE_FOR_VOLUME_OPEN\",\r\n    250,\"HTTP_DRIVER_CORRUPTED\",\r\n    252,\"ATTEMPTED_EXECUTE_OF_NOEXECUTE_MEMORY\",\r\n    253,\"DIRTY_NOWRITE_PAGES_CONGESTION\",\r\n    254,\"BUGCODE_USB_DRIVER\",\r\n    255,\"RESERVE_QUEUE_OVERFLOW\",\r\n    256,\"LOADER_BLOCK_MISMATCH\",\r\n    257,\"CLOCK_WATCHDOG_TIMEOUT\",\r\n    258,\"DPC_WATCHDOG_TIMEOUT\",\r\n    259,\"MUP_FILE_SYSTEM\",\r\n    260,\"AGP_INVALID_ACCESS\",\r\n    261,\"AGP_GART_CORRUPTION\",\r\n    262,\"AGP_ILLEGALLY_REPROGRAMMED\",\r\n    264,\"THIRD_PARTY_FILE_SYSTEM_FAILURE\",\r\n    265,\"CRITICAL_STRUCTURE_CORRUPTION\",\r\n    266,\"APP_TAGGING_INITIALIZATION_FAILED\",\r\n    268,\"FSRTL_EXTRA_CREATE_PARAMETER_VIOLATION\",\r\n    269,\"WDF_VIOLATION\",\r\n    270,\"VIDEO_MEMORY_MANAGEMENT_INTERNAL\",\r\n    271,\"RESOURCE_MANAGER_EXCEPTION_NOT_HANDLED\",\r\n    273,\"RECURSIVE_NMI\",\r\n    274,\"MSRPC_STATE_VIOLATION\",\r\n    275,\"VIDEO_DXGKRNL_FATAL_ERROR\",\r\n    276,\"VIDEO_SHADOW_DRIVER_FATAL_ERROR\",\r\n    277,\"AGP_INTERNAL\",\r\n    278,\"VIDEO_TDR_ERROR\",\r\n    279,\"VIDEO_TDR_TIMEOUT_DETECTED\",\r\n    281,\"VIDEO_SCHEDULER_INTERNAL_ERROR\",\r\n    282,\"EM_INITIALIZATION_FAILURE\",\r\n    283,\"DRIVER_RETURNED_HOLDING_CANCEL_LOCK\",\r\n    284,\"ATTEMPTED_WRITE_TO_CM_PROTECTED_STORAGE\",\r\n    285,\"EVENT_TRACING_FATAL_ERROR\",\r\n    286,\"TOO_MANY_RECURSIVE_FAULTS\",\r\n    287,\"INVALID_DRIVER_HANDLE\",\r\n    288,\"BITLOCKER_FATAL_ERROR\",\r\n    289,\"DRIVER_VIOLATION\",\r\n    290,\"WHEA_INTERNAL_ERROR\",\r\n    291,\"CRYPTO_SELF_TEST_FAILURE\",\r\n    292,\"WHEA_UNCORRECTABLE_ERROR\",\r\n    293,\"NMR_INVALID_STATE\",\r\n    294,\"NETIO_INVALID_POOL_CALLER\",\r\n    295,\"PAGE_NOT_ZERO\",\r\n    296,\"WORKER_THREAD_RETURNED_WITH_BAD_IO_PRIORITY\",\r\n    297,\"WORKER_THREAD_RETURNED_WITH_BAD_PAGING_IO_PRIORITY\",\r\n    298,\"MUI_NO_VALID_SYSTEM_LANGUAGE\",\r\n    299,\"FAULTY_HARDWARE_CORRUPTED_PAGE\",\r\n    300,\"EXFAT_FILE_SYSTEM\",\r\n    301,\"VOLSNAP_OVERLAPPED_TABLE_ACCESS\",\r\n    302,\"INVALID_MDL_RANGE\",\r\n    303,\"VHD_BOOT_INITIALIZATION_FAILED\",\r\n    304,\"DYNAMIC_ADD_PROCESSOR_MISMATCH\",\r\n    305,\"INVALID_EXTENDED_PROCESSOR_STATE\",\r\n    306,\"RESOURCE_OWNER_POINTER_INVALID\",\r\n    307,\"DPC_WATCHDOG_VIOLATION\",\r\n    308,\"DRIVE_EXTENDER\",\r\n    309,\"REGISTRY_FILTER_DRIVER_EXCEPTION\",\r\n    310,\"VHD_BOOT_HOST_VOLUME_NOT_ENOUGH_SPACE\",\r\n    311,\"WIN32K_HANDLE_MANAGER\",\r\n    312,\"GPIO_CONTROLLER_DRIVER_ERROR\",\r\n    313,\"KERNEL_SECURITY_CHECK_FAILURE\",\r\n    314,\"KERNEL_MODE_HEAP_CORRUPTION\",\r\n    315,\"PASSIVE_INTERRUPT_ERROR\",\r\n    316,\"INVALID_IO_BOOST_STATE\",\r\n    317,\"CRITICAL_INITIALIZATION_FAILURE\",\r\n    320,\"STORAGE_DEVICE_ABNORMALITY_DETECTED\",\r\n    321,\"VIDEO_ENGINE_TIMEOUT_DETECTED\",\r\n    322,\"VIDEO_TDR_APPLICATION_BLOCKED\",\r\n    323,\"PROCESSOR_DRIVER_INTERNAL\",\r\n    324,\"BUGCODE_USB3_DRIVER\",\r\n    325,\"SECURE_BOOT_VIOLATION\",\r\n    327,\"ABNORMAL_RESET_DETECTED\",\r\n    329,\"REFS_FILE_SYSTEM\",\r\n    330,\"KERNEL_WMI_INTERNAL\",\r\n    331,\"SOC_SUBSYSTEM_FAILURE\",\r\n    332,\"FATAL_ABNORMAL_RESET_ERROR\",\r\n    333,\"EXCEPTION_SCOPE_INVALID\",\r\n    334,\"SOC_CRITICAL_DEVICE_REMOVED\",\r\n    335,\"PDC_WATCHDOG_TIMEOUT\",\r\n    336,\"TCPIP_AOAC_NIC_ACTIVE_REFERENCE_LEAK\",\r\n    337,\"UNSUPPORTED_INSTRUCTION_MODE\",\r\n    338,\"INVALID_PUSH_LOCK_FLAGS\",\r\n    339,\"KERNEL_LOCK_ENTRY_LEAKED_ON_THREAD_TERMINATION\",\r\n    340,\"UNEXPECTED_STORE_EXCEPTION\",\r\n    341,\"OS_DATA_TAMPERING\",\r\n    342,\"WINSOCK_DETECTED_HUNGOSESOCKET_LIVEDUMP\",\r\n    343,\"KERNEL_THREAD_PRIORITY_FLOOR_VIOLATION\",\r\n    344,\"ILLEGAL_IOMMU_PAGE_FAULT\",\r\n    345,\"HAL_ILLEGAL_IOMMU_PAGE_FAULT\",\r\n    346,\"SDBUS_INTERNAL_ERROR\",\r\n    347,\"WORKER_THREAD_RETURNED_WITH_SYSTEM_PAGE_PRIORITY_ACTIVE\",\r\n    348,\"PDC_WATCHDOG_TIMEOUT_LIVEDUMP\",\r\n    351,\"CONNECTED_STANDBY_WATCHDOG_TIMEOUT_LIVEDUMP\",\r\n    352,\"WIN32K_ATOMIC_CHECK_FAILURE\",\r\n    353,\"LIVE_SYSTEM_DUMP\",\r\n    354,\"KERNEL_AUTO_BOOST_INVALID_LOCK_RELEASE\",\r\n    355,\"WORKER_THREAD_TEST_CONDITION\",\r\n    356,\"WIN32K_CRITICAL_FAILURE\",\r\n    364,\"INVALID_RUNDOWN_PROTECTION_FLAGS\",\r\n    365,\"INVALID_SLOT_ALLOCATOR_FLAGS\",\r\n    366,\"ERESOURCE_INVALID_RELEASE\",\r\n    373,\"PREVIOUS_FATAL_ABNORMAL_RESET_ERROR\",\r\n    376,\"ELAM_DRIVER_DETECTED_FATAL_ERROR\",\r\n    391,\"VIDEO_DWMINIT_TIMEOUT_FALLBACK_BDD\",\r\n    392,\"CLUSTER_CSVFS_LIVEDUMP\",\r\n    393,\"BAD_OBJECT_HEADER\",\r\n    395,\"SECURE_KERNEL_ERROR\",\r\n    400,\"WIN32K_CRITICAL_FAILURE_LIVEDUMP\",\r\n    401,\"PF_DETECTED_CORRUPTION\",\r\n    402,\"KERNEL_AUTO_BOOST_LOCK_ACQUISITION_WITH_RAISED_IRQL\",\r\n    403,\"VIDEO_DXGKRNL_LIVEDUMP\",\r\n    405,\"SMB_SERVER_LIVEDUMP\",\r\n    406,\"LOADER_ROLLBACK_DETECTED\",\r\n    407,\"WIN32K_SECURITY_FAILURE\",\r\n    408,\"UFX_LIVEDUMP\",\r\n    409,\"KERNEL_STORAGE_SLOT_IN_USE\",\r\n    410,\"WORKER_THREAD_RETURNED_WHILE_ATTACHED_TO_SILO\",\r\n    411,\"TTM_FATAL_ERROR\",\r\n    412,\"WIN32K_POWER_WATCHDOG_TIMEOUT\",\r\n    413,\"CLUSTER_SVHDX_LIVEDUMP\",\r\n    452,\"DRIVER_VERIFIER_DETECTED_VIOLATION_LIVEDUMP\",\r\n    453,\"IO_THREADPOOL_DEADLOCK_LIVEDUMP\",\r\n    3070, \"BC_BLUETOOTH_VERIFIER_FAULT\",\r\n    3071, \"BC_BTHMINI_VERIFIER_FAULT\",\r\n    131073,\"HYPERVISOR_ERROR\",\r\n    268435582,\"SYSTEM_THREAD_EXCEPTION_NOT_HANDLED\",\r\n    268435583,\"UNEXPECTED_KERNEL_MODE_TRAP\",\r\n    268435598,\"KERNEL_MODE_EXCEPTION_NOT_HANDLED\",\r\n    268435690,\"THREAD_STUCK_IN_DEVICE_DRIVER\",\r\n    1073741962,\"THREAD_TERMINATE_HELD_MUTEX\",\r\n    3221226008,\"STATUS_CANNOT_LOAD_REGISTRY_FILE\",\r\n    3221226010,\"STATUS_SYSTEM_PROCESS_TERMINATED\",\r\n    3221226017,\"STATUS_IMAGE_CHECKSUM_MISMATCH\",\r\n    3735936685,\"MANUALLY_INITIATED_CRASH1\"\r\n];\r\nSystem_Bugcheck\r\n| where $__timeFilter(Timestamp)\r\n| where Host has \"$Computer\"\r\n| join kind=leftouter BugCheckLookup on BugcheckCode\r\n| extend BugName = coalesce(BugName, tostring(tohex(toint(BugcheckCode), 4)))\r\n| summarize\r\nError = max(BugName)\r\nby bin(Timestamp, 1s), Host\r\n",
+              "querySource": "raw",
+              "queryType": "KQL",
+              "rawMode": true,
+              "refId": "A",
+              "resultFormat": "table"
+            }
+          ],
+          "title": "Stop errors",
+          "type": "table"
+        },
+        {
+          "datasource": {
+            "type": "grafana-azure-data-explorer-datasource",
+            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": true,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "percent"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 87
+          },
+          "id": 45,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "right",
+              "showLegend": true
+            },
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "11.6.0",
+          "targets": [
+            {
+              "OpenAI": false,
+              "clusterUri": "$cluster",
+              "database": "$database",
+              "datasource": {
+                "type": "grafana-azure-data-explorer-datasource",
+                "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+              },
+              "expression": {
+                "groupBy": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "reduce": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "where": {
+                  "expressions": [],
+                  "type": "and"
+                }
+              },
+              "pluginVersion": "6.0.0",
+              "query": "System_SystemPerformanceSummary2\r\n| where $__timeFilter(Timestamp)\r\n| where Host contains \"$Computer\"\r\n| summarize usage = percentile(CPUUsagePercent, 80) by bin(Timestamp, $time_agg), Host\r\n| evaluate pivot(Host, max(usage))\r\n\r\n",
+              "querySource": "raw",
+              "queryType": "KQL",
+              "rawMode": true,
+              "refId": "A",
+              "resultFormat": "table"
+            }
+          ],
+          "title": "CPU usage (p80)",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "grafana-azure-data-explorer-datasource",
+            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": true,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "percent"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 87
+          },
+          "id": 40,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "right",
+              "showLegend": true
+            },
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "11.6.0",
+          "targets": [
+            {
+              "OpenAI": false,
+              "clusterUri": "$cluster",
+              "database": "$database",
+              "datasource": {
+                "type": "grafana-azure-data-explorer-datasource",
+                "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+              },
+              "expression": {
+                "groupBy": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "reduce": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "where": {
+                  "expressions": [],
+                  "type": "and"
+                }
+              },
+              "pluginVersion": "6.0.0",
+              "query": "System_SystemPerformanceSummary2\r\n| where $__timeFilter(Timestamp)\r\n| where Host contains \"$Computer\"\r\n| summarize usage = percentile(RAMUsagePercent, 80) by bin(Timestamp, $time_agg), Host\r\n| evaluate pivot(Host, max(usage))\r\n\r\n",
+              "querySource": "raw",
+              "queryType": "KQL",
+              "rawMode": true,
+              "refId": "A",
+              "resultFormat": "table"
+            }
+          ],
+          "title": "Memory usage (p80)",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "grafana-azure-data-explorer-datasource",
+            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": true,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "percent"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 95
+          },
+          "id": 41,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "right",
+              "showLegend": true
+            },
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "11.6.0",
+          "targets": [
+            {
+              "OpenAI": false,
+              "clusterUri": "$cluster",
+              "database": "$database",
+              "datasource": {
+                "type": "grafana-azure-data-explorer-datasource",
+                "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+              },
+              "expression": {
+                "groupBy": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "reduce": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "where": {
+                  "expressions": [],
+                  "type": "and"
+                }
+              },
+              "pluginVersion": "6.0.0",
+              "query": "System_SystemPerformanceSummary2\r\n| where $__timeFilter(Timestamp)\r\n| where Host contains \"$Computer\"\r\n| summarize usage = percentile(IOPercentDiskTime, 80) by bin(Timestamp, $time_agg), Host\r\n| evaluate pivot(Host, max(usage))\r\n\r\n",
+              "querySource": "raw",
+              "queryType": "KQL",
+              "rawMode": true,
+              "refId": "A",
+              "resultFormat": "table"
+            }
+          ],
+          "title": "Disk utilization (p80)",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "grafana-azure-data-explorer-datasource",
+            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": true,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "ms"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 95
+          },
+          "id": 42,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "right",
+              "showLegend": true
+            },
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "11.6.0",
+          "targets": [
+            {
+              "OpenAI": false,
+              "clusterUri": "$cluster",
+              "database": "$database",
+              "datasource": {
+                "type": "grafana-azure-data-explorer-datasource",
+                "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+              },
+              "expression": {
+                "groupBy": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "reduce": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "where": {
+                  "expressions": [],
+                  "type": "and"
+                }
+              },
+              "pluginVersion": "6.0.0",
+              "query": "System_SystemPerformanceSummary2\r\n| where $__timeFilter(Timestamp)\r\n| where Host contains \"$Computer\"\r\n| extend io_latency = IOLatencyMsRead + IOLatencyMsWrite\r\n| summarize io_latency = sum(io_latency) by bin(Timestamp, $time_agg), Host\r\n| evaluate pivot(Host, max(io_latency))\r\n\r\n",
+              "querySource": "raw",
+              "queryType": "KQL",
+              "rawMode": true,
+              "refId": "A",
+              "resultFormat": "table"
+            }
+          ],
+          "title": "IO latency (sum)",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "grafana-azure-data-explorer-datasource",
+            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": true,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "percent"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 103
+          },
+          "id": 43,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "right",
+              "showLegend": true
+            },
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "11.6.0",
+          "targets": [
+            {
+              "OpenAI": false,
+              "clusterUri": "$cluster",
+              "database": "$database",
+              "datasource": {
+                "type": "grafana-azure-data-explorer-datasource",
+                "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+              },
+              "expression": {
+                "groupBy": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "reduce": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "where": {
+                  "expressions": [],
+                  "type": "and"
+                }
+              },
+              "pluginVersion": "6.0.0",
+              "query": "System_SystemPerformanceSummary2\r\n| where $__timeFilter(Timestamp)\r\n| where Host contains \"$Computer\"\r\n| summarize usage = percentile(NetUtilizationPercent, 80) by bin(Timestamp, $time_agg), Host\r\n| evaluate pivot(Host, max(usage))\r\n\r\n",
+              "querySource": "raw",
+              "queryType": "KQL",
+              "rawMode": true,
+              "refId": "A",
+              "resultFormat": "table"
+            }
+          ],
+          "title": "Network utilization (p80)",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "grafana-azure-data-explorer-datasource",
+            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": true,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "percent"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 103
+          },
+          "id": 44,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "right",
+              "showLegend": true
+            },
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "11.6.0",
+          "targets": [
+            {
+              "OpenAI": false,
+              "clusterUri": "$cluster",
+              "database": "$database",
+              "datasource": {
+                "type": "grafana-azure-data-explorer-datasource",
+                "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+              },
+              "expression": {
+                "groupBy": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "reduce": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "where": {
+                  "expressions": [],
+                  "type": "and"
+                }
+              },
+              "pluginVersion": "6.0.0",
+              "query": "System_SystemPerformanceSummary2\r\n| where $__timeFilter(Timestamp)\r\n| where Host contains \"$Computer\"\r\n| summarize usage = percentile(PagefileUsagePercent, 80) by bin(Timestamp, $time_agg), Host\r\n| evaluate pivot(Host, max(usage))\r\n\r\n",
+              "querySource": "raw",
+              "queryType": "KQL",
+              "rawMode": true,
+              "refId": "A",
+              "resultFormat": "table"
+            }
+          ],
+          "title": "Pagefile usage (p80)",
+          "type": "timeseries"
+        }
+      ],
+      "title": "Machine compute",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 23
+      },
+      "id": 7,
+      "panels": [
+        {
+          "datasource": {
+            "type": "grafana-azure-data-explorer-datasource",
+            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "bars",
+                "fillOpacity": 50,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": true,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "fieldMinMax": false,
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "ms"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 24,
+            "x": 0,
+            "y": 112
+          },
+          "id": 8,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "right",
+              "showLegend": true
+            },
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "11.6.0",
+          "targets": [
+            {
+              "OpenAI": false,
+              "clusterUri": "$cluster",
+              "database": "$database",
+              "datasource": {
+                "type": "grafana-azure-data-explorer-datasource",
+                "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+              },
+              "expression": {
+                "groupBy": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "reduce": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "where": {
+                  "expressions": [],
+                  "type": "and"
+                }
+              },
+              "pluginVersion": "6.0.0",
+              "query": "Process_ProcessStatistics\r\n| where $__timeFilter(Timestamp)\r\n| where ProcUser contains \"$User\"\r\n| where Host contains \"$Computer\"\r\n| extend App = coalesce(AppId,ProcName)\r\n| where App contains \"$App\"\r\n| extend delay = ProcInputDelaySumMs / ProcInputDelayCount\r\n| summarize delay = percentile(delay, 80) by bin(Timestamp, $time_agg), AppId\r\n| evaluate pivot(AppId, max(delay))\r\n| sort by Timestamp",
+              "querySource": "raw",
+              "queryType": "KQL",
+              "rawMode": true,
+              "refId": "A",
+              "resultFormat": "table"
+            }
+          ],
+          "title": "Input delay per app (p80)",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "grafana-azure-data-explorer-datasource",
+            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": true,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "fieldMinMax": false,
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "percent"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 119
+          },
+          "id": 47,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "right",
+              "showLegend": true
+            },
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "11.6.0",
+          "targets": [
+            {
+              "OpenAI": false,
+              "clusterUri": "$cluster",
+              "database": "$database",
+              "datasource": {
+                "type": "grafana-azure-data-explorer-datasource",
+                "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+              },
+              "expression": {
+                "groupBy": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "reduce": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "where": {
+                  "expressions": [],
+                  "type": "and"
+                }
+              },
+              "pluginVersion": "6.0.0",
+              "query": "Process_ProcessDetail\r\n| where $__timeFilter(Timestamp)\r\n| where ProcUser contains \"$User\"\r\n| where Host contains \"$Computer\"\r\n| extend App = coalesce(AppId,ProcName)\r\n| where App contains \"$App\"\r\n| summarize cpu_usage = percentile(ProcCPUPercent, 80) by bin(Timestamp, $time_agg), AppId\r\n| evaluate pivot(AppId, max(cpu_usage))\r\n",
+              "querySource": "raw",
+              "queryType": "KQL",
+              "rawMode": true,
+              "refId": "A",
+              "resultFormat": "table"
+            }
+          ],
+          "title": "CPU usage (p80)",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "grafana-azure-data-explorer-datasource",
+            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": true,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "fieldMinMax": false,
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "decmbytes"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 119
+          },
+          "id": 2,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "right",
+              "showLegend": true
+            },
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "11.6.0",
+          "targets": [
+            {
+              "OpenAI": false,
+              "clusterUri": "$cluster",
+              "database": "$database",
+              "datasource": {
+                "type": "grafana-azure-data-explorer-datasource",
+                "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+              },
+              "expression": {
+                "groupBy": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "reduce": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "where": {
+                  "expressions": [],
+                  "type": "and"
+                }
+              },
+              "pluginVersion": "6.0.0",
+              "query": "Process_ProcessDetail\r\n| where $__timeFilter(Timestamp)\r\n| where ProcUser contains \"$User\"\r\n| where Host contains \"$Computer\"\r\n| extend App = coalesce(AppId,ProcName)\r\n| where App contains \"$App\"\r\n| summarize mem = percentile(ProcWorkingSetMB,80) by bin(Timestamp, $time_agg), AppId\r\n| evaluate pivot(AppId, max(mem))\r\n\r\n",
+              "querySource": "raw",
+              "queryType": "KQL",
+              "rawMode": true,
+              "refId": "A",
+              "resultFormat": "table"
+            }
+          ],
+          "title": "Memory usage (p80)",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "grafana-azure-data-explorer-datasource",
+            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": true,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "fieldMinMax": false,
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 127
+          },
+          "id": 27,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "right",
+              "showLegend": true
+            },
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "11.6.0",
+          "targets": [
+            {
+              "OpenAI": false,
+              "clusterUri": "$cluster",
+              "database": "$database",
+              "datasource": {
+                "type": "grafana-azure-data-explorer-datasource",
+                "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+              },
+              "expression": {
+                "groupBy": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "reduce": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "where": {
+                  "expressions": [],
+                  "type": "and"
+                }
+              },
+              "pluginVersion": "6.0.0",
+              "query": "Process_ProcessDetail\r\n| where $__timeFilter(Timestamp)\r\n| where ProcUser contains \"$User\"\r\n| where Host contains \"$Computer\"\r\n| extend App = coalesce(AppId,ProcName)\r\n| where App contains \"$App\"\r\n| summarize \r\nProcIOReadCount = sum(ProcIOReadCount),\r\nProcIOWriteCount = sum(ProcIOWriteCount)\r\nby bin(Timestamp, $time_agg), AppId\r\n| extend io_count = ProcIOWriteCount + ProcIOReadCount\r\n| project-away ProcIOReadCount, ProcIOWriteCount\r\n| evaluate pivot(AppId, max(io_count))\r\n\r\n",
+              "querySource": "raw",
+              "queryType": "KQL",
+              "rawMode": true,
+              "refId": "A",
+              "resultFormat": "table"
+            }
+          ],
+          "title": "Disk IOs (sum)",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "grafana-azure-data-explorer-datasource",
+            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": true,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "fieldMinMax": false,
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "decmbytes"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 127
+          },
+          "id": 22,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "right",
+              "showLegend": true
+            },
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "11.6.0",
+          "targets": [
+            {
+              "OpenAI": false,
+              "clusterUri": "$cluster",
+              "database": "$database",
+              "datasource": {
+                "type": "grafana-azure-data-explorer-datasource",
+                "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+              },
+              "expression": {
+                "groupBy": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "reduce": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "where": {
+                  "expressions": [],
+                  "type": "and"
+                }
+              },
+              "pluginVersion": "6.0.0",
+              "query": "Process_ProcessDetail\r\n| where $__timeFilter(Timestamp)\r\n| where ProcUser contains \"$User\"\r\n| where Host contains \"$Computer\"\r\n| extend App = coalesce(AppId,ProcName)\r\n| where App contains \"$App\"\r\n| summarize net = percentile(ProcNetKBPS,80)/1024 by bin(Timestamp, $time_agg), AppId\r\n| evaluate pivot(AppId, max(net))\r\n\r\n",
+              "querySource": "raw",
+              "queryType": "KQL",
+              "rawMode": true,
+              "refId": "A",
+              "resultFormat": "table"
+            }
+          ],
+          "title": "Network thruput (p80)",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "grafana-azure-data-explorer-datasource",
+            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": true,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "fieldMinMax": false,
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "percent"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 135
+          },
+          "id": 25,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "right",
+              "showLegend": true
+            },
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "11.6.0",
+          "targets": [
+            {
+              "OpenAI": false,
+              "clusterUri": "$cluster",
+              "database": "$database",
+              "datasource": {
+                "type": "grafana-azure-data-explorer-datasource",
+                "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+              },
+              "expression": {
+                "groupBy": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "reduce": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "where": {
+                  "expressions": [],
+                  "type": "and"
+                }
+              },
+              "pluginVersion": "6.0.0",
+              "query": "Process_ProcessDetail\r\n| where $__timeFilter(Timestamp)\r\n| where ProcUser contains \"$User\"\r\n| where Host contains \"$Computer\"\r\n| extend App = coalesce(AppId,ProcName)\r\n| where App contains \"$App\"\r\n| summarize \r\ngpu = percentile(ProcGpuComputePercent,80)\r\nby bin(Timestamp, $time_agg), AppId\r\n| evaluate pivot(AppId, max(gpu))\r\n\r\n",
+              "querySource": "raw",
+              "queryType": "KQL",
+              "rawMode": true,
+              "refId": "A",
+              "resultFormat": "table"
+            }
+          ],
+          "title": "GPU usage (p80)",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "grafana-azure-data-explorer-datasource",
+            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": true,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "fieldMinMax": false,
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "decmbytes"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 135
+          },
+          "id": 24,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "right",
+              "showLegend": true
+            },
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "11.6.0",
+          "targets": [
+            {
+              "OpenAI": false,
+              "clusterUri": "$cluster",
+              "database": "$database",
+              "datasource": {
+                "type": "grafana-azure-data-explorer-datasource",
+                "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+              },
+              "expression": {
+                "groupBy": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "reduce": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "where": {
+                  "expressions": [],
+                  "type": "and"
+                }
+              },
+              "pluginVersion": "6.0.0",
+              "query": "Process_ProcessDetail\r\n| where $__timeFilter(Timestamp)\r\n| where ProcUser contains \"$User\"\r\n| where Host contains \"$Computer\"\r\n| extend App = coalesce(AppId,ProcName)\r\n| where App contains \"$App\"\r\n| summarize mem = percentile(ProcGpuMemMB,80) by bin(Timestamp, $time_agg), AppId\r\n| evaluate pivot(AppId, max(mem))\r\n\r\n",
+              "querySource": "raw",
+              "queryType": "KQL",
+              "rawMode": true,
+              "refId": "A",
+              "resultFormat": "table"
+            }
+          ],
+          "title": "GPU memory (p80)",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "grafana-azure-data-explorer-datasource",
+            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": true,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "fieldMinMax": false,
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 143
+          },
+          "id": 23,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "right",
+              "showLegend": true
+            },
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "11.6.0",
+          "targets": [
+            {
+              "OpenAI": false,
+              "clusterUri": "$cluster",
+              "database": "$database",
+              "datasource": {
+                "type": "grafana-azure-data-explorer-datasource",
+                "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+              },
+              "expression": {
+                "groupBy": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "reduce": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "where": {
+                  "expressions": [],
+                  "type": "and"
+                }
+              },
+              "pluginVersion": "6.0.0",
+              "query": "Process_ProcessStatistics\r\n| where $__timeFilter(Timestamp)\r\n| where ProcUser contains \"$User\"\r\n| where Host contains \"$Computer\"\r\n| extend App = coalesce(AppId,ProcName)\r\n| where App contains \"$App\"\r\n| summarize count = sum(ProcHandleCount) by bin(Timestamp, $time_agg), AppId\r\n| evaluate pivot(AppId, max(count))\r\n\r\n",
+              "querySource": "raw",
+              "queryType": "KQL",
+              "rawMode": true,
+              "refId": "A",
+              "resultFormat": "table"
+            }
+          ],
+          "title": "Handle count (sum)",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "grafana-azure-data-explorer-datasource",
+            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": true,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "fieldMinMax": false,
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 143
+          },
+          "id": 26,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "right",
+              "showLegend": true
+            },
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "11.6.0",
+          "targets": [
+            {
+              "OpenAI": false,
+              "clusterUri": "$cluster",
+              "database": "$database",
+              "datasource": {
+                "type": "grafana-azure-data-explorer-datasource",
+                "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+              },
+              "expression": {
+                "groupBy": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "reduce": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "where": {
+                  "expressions": [],
+                  "type": "and"
+                }
+              },
+              "pluginVersion": "6.0.0",
+              "query": "Process_ProcessStatistics\r\n| where $__timeFilter(Timestamp)\r\n| where ProcUser contains \"$User\"\r\n| where Host contains \"$Computer\"\r\n| extend App = coalesce(AppId,ProcName)\r\n| where App contains \"$App\"\r\n| summarize count = sum(ProcThreadCount) by bin(Timestamp, $time_agg), AppId\r\n| evaluate pivot(AppId, max(count))\r\n\r\n",
+              "querySource": "raw",
+              "queryType": "KQL",
+              "rawMode": true,
+              "refId": "A",
+              "resultFormat": "table"
+            }
+          ],
+          "title": "Thread count (sum)",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "grafana-azure-data-explorer-datasource",
+            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "bars",
+                "fillOpacity": 50,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": true,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "fieldMinMax": false,
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 151
+          },
+          "id": 21,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "right",
+              "showLegend": true
+            },
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "11.6.0",
+          "targets": [
+            {
+              "OpenAI": false,
+              "clusterUri": "$cluster",
+              "database": "$database",
+              "datasource": {
+                "type": "grafana-azure-data-explorer-datasource",
+                "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+              },
+              "expression": {
+                "groupBy": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "reduce": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "where": {
+                  "expressions": [],
+                  "type": "and"
+                }
+              },
+              "pluginVersion": "6.0.0",
+              "query": "Application_Errors\r\n| where $__timeFilter(Timestamp)\r\n| where ProcUser contains \"$User\"\r\n| where Host contains \"$Computer\"\r\n| extend App = coalesce(AppId,ProcName)\r\n| where App contains \"$App\"\r\n| summarize \r\nCrashes = sum(ErrorType)\r\nby bin(Timestamp, $time_agg), App\r\n| evaluate pivot(App, max(Crashes))\r\n| sort by Timestamp",
+              "querySource": "raw",
+              "queryType": "KQL",
+              "rawMode": true,
+              "refId": "A",
+              "resultFormat": "table"
+            }
+          ],
+          "title": "Errors & Hangs over time (sum)",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "grafana-azure-data-explorer-datasource",
+            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+          },
+          "description": "Lists all crashes and hangs by process. \n\nIf you need more granular time buckets, change the time aggregation dashboard variable.",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "custom": {
+                "align": "auto",
+                "cellOptions": {
+                  "type": "auto"
+                },
+                "inspect": false
+              },
+              "fieldMinMax": false,
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 159
+          },
+          "id": 48,
+          "options": {
+            "cellHeight": "sm",
+            "footer": {
+              "countRows": false,
+              "fields": "",
+              "reducer": [
+                "sum"
+              ],
+              "show": false
+            },
+            "showHeader": true
+          },
+          "pluginVersion": "11.6.0",
+          "targets": [
+            {
+              "OpenAI": false,
+              "clusterUri": "$cluster",
+              "database": "$database",
+              "datasource": {
+                "type": "grafana-azure-data-explorer-datasource",
+                "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+              },
+              "expression": {
+                "groupBy": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "reduce": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "where": {
+                  "expressions": [],
+                  "type": "and"
+                }
+              },
+              "pluginVersion": "6.0.0",
+              "query": "Application_Errors\r\n| where $__timeFilter(Timestamp)\r\n| where ProcUser contains \"$User\"\r\n| where Host contains \"$Computer\"\r\n| extend App = coalesce(AppId,ProcName)\r\n| where App contains \"$App\"\r\n| extend type = case(ErrorType == 1, \"crash\", ErrorType == 2, \"hang\", \"unknown\")\r\n| summarize \r\ncount = sum(ErrorType),\r\nmodules = make_set(ModuleName),\r\nexception_codes = make_set(ExceptionCode),\r\ntype = max(type)\r\nby bin(Timestamp, $time_agg), process = ProcName, process_version = ProcVersion, app = App, user = ProcUser, computer = Host\r\n| project-rename time_bucket = Timestamp\r\n| project time_bucket, process, process_version, app, type, user, computer, count, modules, exception_codes\r\n\r\n",
+              "querySource": "raw",
+              "queryType": "KQL",
+              "rawMode": true,
+              "refId": "A",
+              "resultFormat": "table"
+            }
+          ],
+          "title": "Errors & Hangs details",
+          "type": "table"
+        }
+      ],
+      "title": "App compute",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 24
+      },
+      "id": 5,
+      "panels": [
+        {
+          "datasource": {
+            "type": "grafana-azure-data-explorer-datasource",
+            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": true,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "fieldMinMax": false,
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "ms"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 168
+          },
+          "id": 3,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "right",
+              "showLegend": true
+            },
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "11.6.0",
+          "targets": [
+            {
+              "OpenAI": false,
+              "clusterUri": "$cluster",
+              "database": "$database",
+              "datasource": {
+                "type": "grafana-azure-data-explorer-datasource",
+                "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+              },
+              "expression": {
+                "groupBy": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "reduce": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "where": {
+                  "expressions": [],
+                  "type": "and"
+                }
+              },
+              "pluginVersion": "6.0.0",
+              "query": "Process_NetworkTargetPerformance\r\n| where $__timeFilter(Timestamp) \r\n| where ProcUser contains \"$User\"\r\n| where Host contains \"$Computer\"\r\n| extend App = coalesce(AppId,ProcName)\r\n| where App contains \"$App\"\r\n| summarize net_latency = percentile(NetTargetSendLatencyMs,80) by bin(Timestamp, $time_agg), AppId\r\n| evaluate pivot(AppId, max(net_latency))\r\n\r\n",
+              "querySource": "raw",
+              "queryType": "KQL",
+              "rawMode": true,
+              "refId": "A",
+              "resultFormat": "table"
+            }
+          ],
+          "title": "TCP latency (p80)",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "grafana-azure-data-explorer-datasource",
+            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": true,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "fieldMinMax": false,
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "ms"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 168
+          },
+          "id": 4,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "right",
+              "showLegend": true
+            },
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "11.6.0",
+          "targets": [
+            {
+              "OpenAI": false,
+              "clusterUri": "$cluster",
+              "database": "$database",
+              "datasource": {
+                "type": "grafana-azure-data-explorer-datasource",
+                "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+              },
+              "expression": {
+                "groupBy": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "reduce": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "where": {
+                  "expressions": [],
+                  "type": "and"
+                }
+              },
+              "pluginVersion": "6.0.0",
+              "query": "Process_NetworkTargetPerformance\r\n| where $__timeFilter(Timestamp) \r\n| where ProcUser contains \"$User\"\r\n| where Host contains \"$Computer\"\r\n| extend App = coalesce(AppId,ProcName)\r\n| where App contains \"$App\"\r\n| summarize net_jitter = percentile(NetTargetSendJitterMs,80) by bin(Timestamp, $time_agg), AppId\r\n| evaluate pivot(AppId, max(net_jitter))\r\n\r\n",
+              "querySource": "raw",
+              "queryType": "KQL",
+              "rawMode": true,
+              "refId": "A",
+              "resultFormat": "table"
+            }
+          ],
+          "title": "Jitter (p80)",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "grafana-azure-data-explorer-datasource",
+            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": true,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "fieldMinMax": false,
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "decmbytes"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 176
+          },
+          "id": 9,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "right",
+              "showLegend": true
+            },
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "11.6.0",
+          "targets": [
+            {
+              "OpenAI": false,
+              "clusterUri": "$cluster",
+              "database": "$database",
+              "datasource": {
+                "type": "grafana-azure-data-explorer-datasource",
+                "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+              },
+              "expression": {
+                "groupBy": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "reduce": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "where": {
+                  "expressions": [],
+                  "type": "and"
+                }
+              },
+              "pluginVersion": "6.0.0",
+              "query": "Process_NetworkTargetPerformance\r\n| where $__timeFilter(Timestamp) \r\n| where ProcUser contains \"$User\"\r\n| where Host contains \"$Computer\"\r\n| extend App = coalesce(AppId,ProcName)\r\n| where App contains \"$App\"\r\n| summarize\r\n  net_receive = sum(NetTargetReceiveMB)\r\n    by bin(Timestamp, $time_agg), AppId\r\n| evaluate pivot(AppId, sum(net_receive))\r\n\r\n",
+              "querySource": "raw",
+              "queryType": "KQL",
+              "rawMode": true,
+              "refId": "A",
+              "resultFormat": "table"
+            }
+          ],
+          "title": "Receive data volume",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "grafana-azure-data-explorer-datasource",
+            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": true,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "fieldMinMax": false,
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "decmbytes"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 176
+          },
+          "id": 14,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "right",
+              "showLegend": true
+            },
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "11.6.0",
+          "targets": [
+            {
+              "OpenAI": false,
+              "clusterUri": "$cluster",
+              "database": "$database",
+              "datasource": {
+                "type": "grafana-azure-data-explorer-datasource",
+                "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+              },
+              "expression": {
+                "groupBy": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "reduce": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "where": {
+                  "expressions": [],
+                  "type": "and"
+                }
+              },
+              "pluginVersion": "6.0.0",
+              "query": "Process_NetworkTargetPerformance\r\n| where $__timeFilter(Timestamp) \r\n| where ProcUser contains \"$User\"\r\n| where Host contains \"$Computer\"\r\n| extend App = coalesce(AppId,ProcName)\r\n| where App contains \"$App\"\r\n| summarize\r\n  net_send = sum(NetTargetSendMB)\r\n    by bin(Timestamp, $time_agg), AppId\r\n| evaluate pivot(AppId, sum(net_send))\r\n\r\n",
+              "querySource": "raw",
+              "queryType": "KQL",
+              "rawMode": true,
+              "refId": "A",
+              "resultFormat": "table"
+            }
+          ],
+          "title": "Send data volume",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "grafana-azure-data-explorer-datasource",
+            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+          },
+          "description": "Click on an app to filter the dashboard.",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "custom": {
+                "align": "auto",
+                "cellOptions": {
+                  "type": "auto"
+                },
+                "filterable": true,
+                "inspect": false
+              },
+              "fieldMinMax": false,
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "net_latency_p80"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "ms"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byRegexp",
+                  "options": "/.*vol$/"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "decmbytes"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "App"
+                },
+                "properties": [
+                  {
+                    "id": "links",
+                    "value": [
+                      {
+                        "title": "Filter dashboard",
+                        "url": "d/${__dashboard.uid}/user-session-performance?var-Computer=${Computer}&var-User=${User}&var-App=${__data.fields[\"App\"]}"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 16,
+            "w": 24,
+            "x": 0,
+            "y": 184
+          },
+          "id": 19,
+          "options": {
+            "cellHeight": "sm",
+            "footer": {
+              "countRows": false,
+              "enablePagination": true,
+              "fields": "",
+              "reducer": [
+                "sum"
+              ],
+              "show": true
+            },
+            "showHeader": true,
+            "sortBy": [
+              {
+                "desc": true,
+                "displayName": "latency_p80"
+              }
+            ]
+          },
+          "pluginVersion": "11.6.0",
+          "targets": [
+            {
+              "OpenAI": false,
+              "clusterUri": "$cluster",
+              "database": "$database",
+              "datasource": {
+                "type": "grafana-azure-data-explorer-datasource",
+                "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+              },
+              "expression": {
+                "groupBy": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "reduce": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "where": {
+                  "expressions": [],
+                  "type": "and"
+                }
+              },
+              "pluginVersion": "6.0.0",
+              "query": "Process_NetworkTargetPerformance\r\n| where $__timeFilter(Timestamp) \r\n| where ProcUser contains \"$User\"\r\n| where Host contains \"$Computer\"\r\n| extend App = coalesce(AppId,ProcName)\r\n| where App contains \"$App\"\r\n| extend target = coalesce(NetTargetRemoteName,NetTargetRemoteAddress)\r\n| extend App = coalesce(AppId,ProcName)\r\n| where App contains \"$App\"\r\n| summarize \r\n  latency_p80 = percentile(NetTargetSendLatencyMs,80),\r\n  receive_count = sum(NetTargetReceiveCount),\r\n  send_count = sum(NetTargetSendCount),\r\n  reconnect_count = sum(NetTargetReconnectCount),\r\n  retransmit_count = sum(NetTargetRetransmitCount),\r\n  send_vol = sum(NetTargetSendMB),\r\n  receive_vol = sum(NetTargetReceiveMB)\r\n  by App, Target = target, Port = NetTargetRemotePort\r\n| sort by App asc, Target asc \r\n\r\n",
+              "querySource": "raw",
+              "queryType": "KQL",
+              "rawMode": true,
+              "refId": "A",
+              "resultFormat": "table"
+            }
+          ],
+          "title": "Data table",
+          "type": "table"
+        },
+        {
+          "datasource": {
+            "type": "grafana-azure-data-explorer-datasource",
+            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+          },
+          "description": "Select an app in the table above to filter this time chart",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": true,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "fieldMinMax": false,
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "ms"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 200
+          },
+          "id": 20,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "11.6.0",
+          "targets": [
+            {
+              "OpenAI": false,
+              "clusterUri": "$cluster",
+              "database": "$database",
+              "datasource": {
+                "type": "grafana-azure-data-explorer-datasource",
+                "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+              },
+              "expression": {
+                "groupBy": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "reduce": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "where": {
+                  "expressions": [],
+                  "type": "and"
+                }
+              },
+              "pluginVersion": "6.0.0",
+              "query": "Process_NetworkTargetPerformance\r\n| where $__timeFilter(Timestamp) \r\n| where ProcUser contains \"$User\"\r\n| where Host contains \"$Computer\"\r\n| extend App = coalesce(AppId,ProcName)\r\n| where App contains \"$App\"\r\n| extend target = coalesce(NetTargetRemoteName,NetTargetRemoteAddress)\r\n| summarize \r\n  latency_p80 = percentile(NetTargetSendLatencyMs,80)\r\n  by bin(Timestamp, $time_agg), App, Target = target, Port = NetTargetRemotePort\r\n| sort by App asc, Target asc , Port asc\r\n| extend target_full = strcat(App,\" -> \",Target,\":\",Port)\r\n| project Timestamp, target_full, latency_p80\r\n| evaluate pivot(target_full, max(latency_p80))\r\n\r\n",
+              "querySource": "raw",
+              "queryType": "KQL",
+              "rawMode": true,
+              "refId": "A",
+              "resultFormat": "table"
+            }
+          ],
+          "title": "Latency p80 over time",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "grafana-azure-data-explorer-datasource",
+            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+          },
+          "description": "Select an app in the table above to filter this time chart",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": true,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "fieldMinMax": false,
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "net_latency_p80"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "ms"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byRegexp",
+                  "options": "/.*vol$/"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "decmbytes"
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 208
+          },
+          "id": 28,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "11.6.0",
+          "targets": [
+            {
+              "OpenAI": false,
+              "clusterUri": "$cluster",
+              "database": "$database",
+              "datasource": {
+                "type": "grafana-azure-data-explorer-datasource",
+                "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+              },
+              "expression": {
+                "groupBy": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "reduce": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "where": {
+                  "expressions": [],
+                  "type": "and"
+                }
+              },
+              "pluginVersion": "6.0.0",
+              "query": "Process_NetworkTargetPerformance\r\n| where $__timeFilter(Timestamp) \r\n| where ProcUser contains \"$User\"\r\n| where Host contains \"$Computer\"\r\n| extend App = coalesce(AppId,ProcName)\r\n| where App contains \"$App\"\r\n| extend target = coalesce(NetTargetRemoteName,NetTargetRemoteAddress)\r\n| summarize \r\n  receive_count = sum(NetTargetReceiveCount),\r\n  send_count = sum(NetTargetSendCount)\r\n  by bin(Timestamp, $time_agg), App, Target = target, Port = NetTargetRemotePort\r\n| sort by App asc, Target asc , Port asc\r\n| extend target_full = strcat(App,\" -> \",Target,\":\",Port)\r\n| project Timestamp, target_full, receive_count\r\n| evaluate pivot(target_full, max(receive_count))\r\n\r\n",
+              "querySource": "raw",
+              "queryType": "KQL",
+              "rawMode": true,
+              "refId": "A",
+              "resultFormat": "table"
+            }
+          ],
+          "title": "Receive count over time",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "grafana-azure-data-explorer-datasource",
+            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+          },
+          "description": "Select an app in the table above to filter this time chart",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": true,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "fieldMinMax": false,
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "net_latency_p80"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "ms"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byRegexp",
+                  "options": "/.*vol$/"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "decmbytes"
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 216
+          },
+          "id": 29,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "11.6.0",
+          "targets": [
+            {
+              "OpenAI": false,
+              "clusterUri": "$cluster",
+              "database": "$database",
+              "datasource": {
+                "type": "grafana-azure-data-explorer-datasource",
+                "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+              },
+              "expression": {
+                "groupBy": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "reduce": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "where": {
+                  "expressions": [],
+                  "type": "and"
+                }
+              },
+              "pluginVersion": "6.0.0",
+              "query": "Process_NetworkTargetPerformance\r\n| where $__timeFilter(Timestamp) \r\n| where ProcUser contains \"$User\"\r\n| where Host contains \"$Computer\"\r\n| extend App = coalesce(AppId,ProcName)\r\n| where App contains \"$App\"\r\n| extend target = coalesce(NetTargetRemoteName,NetTargetRemoteAddress)\r\n| summarize \r\n  send_count = sum(NetTargetSendCount)\r\n  by bin(Timestamp, $time_agg), App, Target = target, Port = NetTargetRemotePort\r\n| sort by App asc, Target asc , Port asc\r\n| extend target_full = strcat(App,\" -> \",Target,\":\",Port)\r\n| project Timestamp, target_full, send_count\r\n| evaluate pivot(target_full, max(send_count))\r\n\r\n",
+              "querySource": "raw",
+              "queryType": "KQL",
+              "rawMode": true,
+              "refId": "A",
+              "resultFormat": "table"
+            }
+          ],
+          "title": "Send count over time",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "grafana-azure-data-explorer-datasource",
+            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+          },
+          "description": "Select an app in the table above to filter this time chart",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": true,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "fieldMinMax": false,
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "net_latency_p80"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "ms"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byRegexp",
+                  "options": "/.*vol$/"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "decmbytes"
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 224
+          },
+          "id": 30,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "11.6.0",
+          "targets": [
+            {
+              "OpenAI": false,
+              "clusterUri": "$cluster",
+              "database": "$database",
+              "datasource": {
+                "type": "grafana-azure-data-explorer-datasource",
+                "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+              },
+              "expression": {
+                "groupBy": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "reduce": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "where": {
+                  "expressions": [],
+                  "type": "and"
+                }
+              },
+              "pluginVersion": "6.0.0",
+              "query": "Process_NetworkTargetPerformance\r\n| where $__timeFilter(Timestamp) \r\n| where ProcUser contains \"$User\"\r\n| where Host contains \"$Computer\"\r\n| extend App = coalesce(AppId,ProcName)\r\n| where App contains \"$App\"\r\n| extend target = coalesce(NetTargetRemoteName,NetTargetRemoteAddress)\r\n| summarize \r\n  reconnect_count = sum(NetTargetReconnectCount),\r\n  retransmit_count = sum(NetTargetRetransmitCount),\r\n  send_vol = sum(NetTargetSendMB),\r\n  receive_vol = sum(NetTargetReceiveMB)\r\n  by bin(Timestamp, $time_agg), App, Target = target, Port = NetTargetRemotePort\r\n| sort by App asc, Target asc , Port asc\r\n| extend target_full = strcat(App,\" -> \",Target,\":\",Port)\r\n| project Timestamp, target_full, reconnect_count\r\n| evaluate pivot(target_full, max(reconnect_count))\r\n\r\n",
+              "querySource": "raw",
+              "queryType": "KQL",
+              "rawMode": true,
+              "refId": "A",
+              "resultFormat": "table"
+            }
+          ],
+          "title": "Reconnect count over time",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "grafana-azure-data-explorer-datasource",
+            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+          },
+          "description": "Select an app in the table above to filter this time chart",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": true,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "fieldMinMax": false,
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "net_latency_p80"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "ms"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byRegexp",
+                  "options": "/.*vol$/"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "decmbytes"
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 232
+          },
+          "id": 31,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "11.6.0",
+          "targets": [
+            {
+              "OpenAI": false,
+              "clusterUri": "$cluster",
+              "database": "$database",
+              "datasource": {
+                "type": "grafana-azure-data-explorer-datasource",
+                "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+              },
+              "expression": {
+                "groupBy": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "reduce": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "where": {
+                  "expressions": [],
+                  "type": "and"
+                }
+              },
+              "pluginVersion": "6.0.0",
+              "query": "Process_NetworkTargetPerformance\r\n| where $__timeFilter(Timestamp) \r\n| where ProcUser contains \"$User\"\r\n| where Host contains \"$Computer\"\r\n| extend App = coalesce(AppId,ProcName)\r\n| where App contains \"$App\"\r\n| extend target = coalesce(NetTargetRemoteName,NetTargetRemoteAddress)\r\n| summarize \r\n  retransmit_count = sum(NetTargetRetransmitCount)\r\n  by bin(Timestamp, $time_agg), App, Target = target, Port = NetTargetRemotePort\r\n| sort by App asc, Target asc , Port asc\r\n| extend target_full = strcat(App,\" -> \",Target,\":\",Port)\r\n| project Timestamp, target_full, retransmit_count\r\n| evaluate pivot(target_full, max(retransmit_count))\r\n\r\n",
+              "querySource": "raw",
+              "queryType": "KQL",
+              "rawMode": true,
+              "refId": "A",
+              "resultFormat": "table"
+            }
+          ],
+          "title": "Retransmit count over time",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "grafana-azure-data-explorer-datasource",
+            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+          },
+          "description": "Select an app in the table above to filter this time chart",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": true,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "fieldMinMax": false,
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "decmbytes"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 240
+          },
+          "id": 32,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "11.6.0",
+          "targets": [
+            {
+              "OpenAI": false,
+              "clusterUri": "$cluster",
+              "database": "$database",
+              "datasource": {
+                "type": "grafana-azure-data-explorer-datasource",
+                "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+              },
+              "expression": {
+                "groupBy": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "reduce": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "where": {
+                  "expressions": [],
+                  "type": "and"
+                }
+              },
+              "pluginVersion": "6.0.0",
+              "query": "Process_NetworkTargetPerformance\r\n| where $__timeFilter(Timestamp) \r\n| where ProcUser contains \"$User\"\r\n| where Host contains \"$Computer\"\r\n| extend App = coalesce(AppId,ProcName)\r\n| where App contains \"$App\"\r\n| extend target = coalesce(NetTargetRemoteName,NetTargetRemoteAddress)\r\n| summarize \r\n  send_vol = sum(NetTargetSendMB),\r\n  receive_vol = sum(NetTargetReceiveMB)\r\n  by bin(Timestamp, $time_agg), App, Target = target, Port = NetTargetRemotePort\r\n| sort by App asc, Target asc , Port asc\r\n| extend target_full = strcat(App,\" -> \",Target,\":\",Port)\r\n| project Timestamp, target_full, send_vol\r\n| evaluate pivot(target_full, max(send_vol))\r\n\r\n",
+              "querySource": "raw",
+              "queryType": "KQL",
+              "rawMode": true,
+              "refId": "A",
+              "resultFormat": "table"
+            }
+          ],
+          "title": "Send data volume over time",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "grafana-azure-data-explorer-datasource",
+            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+          },
+          "description": "Select an app in the table above to filter this time chart",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": true,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "fieldMinMax": false,
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "decmbytes"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 248
+          },
+          "id": 33,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "11.6.0",
+          "targets": [
+            {
+              "OpenAI": false,
+              "clusterUri": "$cluster",
+              "database": "$database",
+              "datasource": {
+                "type": "grafana-azure-data-explorer-datasource",
+                "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+              },
+              "expression": {
+                "groupBy": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "reduce": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "where": {
+                  "expressions": [],
+                  "type": "and"
+                }
+              },
+              "pluginVersion": "6.0.0",
+              "query": "Process_NetworkTargetPerformance\r\n| where $__timeFilter(Timestamp) \r\n| where ProcUser contains \"$User\"\r\n| where Host contains \"$Computer\"\r\n| extend App = coalesce(AppId,ProcName)\r\n| where App contains \"$App\"\r\n| extend target = coalesce(NetTargetRemoteName,NetTargetRemoteAddress)\r\n| summarize \r\n  receive_vol = sum(NetTargetReceiveMB)\r\n  by bin(Timestamp, $time_agg), App, Target = target, Port = NetTargetRemotePort\r\n| sort by App asc, Target asc , Port asc\r\n| extend target_full = strcat(App,\" -> \",Target,\":\",Port)\r\n| project Timestamp, target_full, receive_vol\r\n| evaluate pivot(target_full, max(receive_vol))\r\n\r\n",
+              "querySource": "raw",
+              "queryType": "KQL",
+              "rawMode": true,
+              "refId": "A",
+              "resultFormat": "table"
+            }
+          ],
+          "title": "Receive data volume over time",
+          "type": "timeseries"
+        }
+      ],
+      "title": "App networking",
+      "type": "row"
+    }
+  ],
+  "schemaVersion": 41,
+  "tags": [
+    "uberAgent",
+    "Azure Data Explorer"
+  ],
+  "templating": {
+    "list": [
+      {
+        "allowCustomValue": false,
+        "current": {},
+        "label": "Datasource",
+        "name": "datasource",
+        "options": [],
+        "query": "grafana-azure-data-explorer-datasource",
+        "refresh": 1,
+        "regex": "",
+        "type": "datasource"
+      },
+      {
+        "allowCustomValue": false,
+        "current": {},
+        "datasource": {
+          "type": "grafana-azure-data-explorer-datasource",
+          "uid": "${datasource}"
+        },
+        "definition": "",
+        "label": "Cluster",
+        "name": "cluster",
+        "options": [],
+        "query": {
+          "azureLogAnalytics": {
+            "query": "",
+            "resources": []
+          },
+          "clusterUri": "",
+          "database": "",
+          "queryType": "Clusters",
+          "refId": "A",
+          "subscription": ""
+        },
+        "refresh": 1,
+        "regex": "",
+        "type": "query"
+      },
+      {
+        "allowCustomValue": false,
+        "current": {},
+        "datasource": {
+          "type": "grafana-azure-data-explorer-datasource",
+          "uid": "${datasource}"
+        },
+        "definition": "",
+        "label": "Database",
+        "name": "database",
+        "options": [],
+        "query": {
+          "azureLogAnalytics": {
+            "query": "",
+            "resources": []
+          },
+          "clusterUri": "$cluster",
+          "database": "",
+          "queryType": "Databases",
+          "refId": "A",
+          "subscription": ""
+        },
+        "refresh": 1,
+        "regex": "",
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {
+          "text": "",
+          "value": ""
+        },
+        "description": "Filter the dashboard to usernames or parts of username. I.e. \"jo\" would include the users \"joe\" and \"john\".",
+        "name": "User",
+        "options": [
+          {
+            "selected": true,
+            "text": "",
+            "value": ""
+          }
+        ],
+        "query": "",
+        "type": "textbox"
+      },
+      {
+        "current": {
+          "text": "",
+          "value": ""
+        },
+        "description": "Filter the dashboard to computer names or parts of computer names. I.e. \"pc\" would include the computers \"pc1\" and \"pc-test\".",
+        "label": "Machine",
+        "name": "Computer",
+        "options": [
+          {
+            "selected": true,
+            "text": "",
+            "value": ""
+          }
+        ],
+        "query": "",
+        "type": "textbox"
+      },
+      {
+        "current": {
+          "text": "",
+          "value": ""
+        },
+        "description": "Filter the dashboard to an app or parts of app names. I.e. \"my\" would include the apps \"my-dev-app\" and \"my-hr-app\".",
+        "name": "App",
+        "options": [
+          {
+            "selected": true,
+            "text": "",
+            "value": ""
+          }
+        ],
+        "query": "",
+        "type": "textbox"
+      },
+      {
+        "current": {
+          "text": "10m",
+          "value": "10m"
+        },
+        "description": "Time series charts aggregate metrics over a time frame. You can change the time frame here.",
+        "label": "Time aggregation",
+        "name": "time_agg",
+        "options": [
+          {
+            "selected": false,
+            "text": "1m",
+            "value": "1m"
+          },
+          {
+            "selected": false,
+            "text": "5m",
+            "value": "5m"
+          },
+          {
+            "selected": true,
+            "text": "10m",
+            "value": "10m"
+          },
+          {
+            "selected": false,
+            "text": "15m",
+            "value": "15m"
+          },
+          {
+            "selected": false,
+            "text": "30m",
+            "value": "30m"
+          },
+          {
+            "selected": false,
+            "text": "1h",
+            "value": "1h"
+          },
+          {
+            "selected": false,
+            "text": "1d",
+            "value": "1d"
+          }
+        ],
+        "query": "1m,5m,10m,15m,30m,1h,1d",
+        "type": "custom"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-3h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "Troubleshooting Poor User Experience",
+  "uid": "",
+  "version": 1,
+  "weekStart": ""
+}

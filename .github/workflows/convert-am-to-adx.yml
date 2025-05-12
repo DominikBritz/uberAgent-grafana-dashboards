@@ -1,0 +1,56 @@
+name: Convert AM JSON to ADX
+
+on:
+  push:
+    # any JSON under source/am
+    paths:
+      - 'source/am/**/*.json'
+  workflow_dispatch:
+
+jobs:
+  convert:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Install jq
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y jq
+
+      - name: Make scripts executable
+        run: | 
+          chmod +x scripts/convert-am-to-adx.sh
+          chmod +x scripts/finalize-jsons.sh
+
+      - name: Convert all AM JSON to ADX
+        run: |
+            mkdir -p source/adx
+            for src in source/am/*.am.json; do
+               base=$(basename "$src" .am.json)              
+               dest="source/adx/${base}.adx.json"                      
+               ./scripts/convert-am-to-adx.sh "$src" "$dest"
+            done
+
+      
+      - name: Finalize & emit real JSONs
+        run: |
+          # clean out any old .json in dist
+          rm -f dist/*.json
+
+          # process all templated JSONs in am/ and adx/
+          scripts/finalize-jsons.sh mapping.json source/am/*.am.json source/adx/*.adx.json
+
+      - name: Commit & push generated ADX files
+        uses: EndBug/add-and-commit@v9
+        with:
+          author_name: github-actions[bot]
+          author_email: github-actions[bot]@users.noreply.github.com
+          message: 'chore: update ADX JSON from ${{ github.sha }}'
+          add: |
+            source/adx/
+            dist/

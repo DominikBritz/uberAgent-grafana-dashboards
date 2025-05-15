@@ -1,0 +1,69 @@
+{
+  "annotations": {},
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 1,
+  "panels": [
+    {
+      "description": "Session Delay",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "axisBorderShow": false,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "showPoints": "auto",
+            "spanNulls": false,
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "repeatDirection": "h",
+      "targets": [
+        {
+          "query": "uberAgent_Session_SessionDetail_CL\r\n| where $__timeFilter(TimeGenerated)\r\n| where SessionUser_s != \"sys\"\r\n| where SessionUser_s contains \"$User\"\r\n| where Computer contains \"$Computer\"\r\n| extend delay = SessionInputDelaySumMs_d/SessionInputDelayCount_d\r\n| summarize \r\ndelay = percentile(delay,80),\r\nSessionRpLatencyMs_d =  percentile(column_ifexists(\"SessionRpLatencyMs_d\", 0),80)\r\nby bin(TimeGenerated, $time_agg)\r\n| extend session_delay = delay + SessionRpLatencyMs_d\r\n| project-away delay, SessionRpLatencyMs_d\r\n\r\n\r\n"
+        }
+      ],
+      "title": "Session Delay",
+      "transparent": false,
+      "type": "timeseries"
+    }
+  ],
+  "schemaVersion": 41,
+  "tags": [
+    "generated",
+    "uberAgent"
+  ],
+  "templating": {},
+  "time": {
+    "from": "now-3h",
+    "to": "now"
+  },
+  "timezone": "browser",
+  "title": "Troubleshooting Poor User Experience 2",
+  "uid": "poor-user-experience"
+}

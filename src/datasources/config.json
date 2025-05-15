@@ -1,0 +1,8 @@
+[
+   {
+      "name": "azuremonitor",
+      "queries": {
+         "overview_session_delay": "uberAgent_Session_SessionDetail_CL\r\n| where $__timeFilter(TimeGenerated)\r\n| where SessionUser_s != \"sys\"\r\n| where SessionUser_s contains \"$User\"\r\n| where Computer contains \"$Computer\"\r\n| extend delay = SessionInputDelaySumMs_d/SessionInputDelayCount_d\r\n| summarize \r\ndelay = percentile(delay,80),\r\nSessionRpLatencyMs_d =  percentile(column_ifexists(\"SessionRpLatencyMs_d\", 0),80)\r\nby bin(TimeGenerated, $time_agg)\r\n| extend session_delay = delay + SessionRpLatencyMs_d\r\n| project-away delay, SessionRpLatencyMs_d\r\n\r\n\r\n"
+      }
+   }
+]

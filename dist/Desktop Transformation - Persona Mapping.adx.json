@@ -1727,7 +1727,7 @@
   },
   "time": {
     "from": "now/d",
-    "to": "now/d"
+    "to": "now"
   },
   "timepicker": {},
   "timezone": "browser",

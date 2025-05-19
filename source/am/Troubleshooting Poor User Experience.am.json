@@ -4260,7 +4260,7 @@
         "current": {},
         "datasource": {
           "type": "grafana-azure-monitor-datasource",
-          "uid": "${DS_GRAFANA-AZURE-MONITOR-DATASOURCE}"
+          "uid": "${datasource}"
         },
         "definition": "",
         "label": "Resource group",

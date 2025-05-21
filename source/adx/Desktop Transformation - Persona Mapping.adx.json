@@ -1,14 +1,4 @@
 {
-  "__inputs": [
-    {
-      "name": "DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE",
-      "label": "grafana-azure-data-explorer-datasource",
-      "description": "",
-      "type": "datasource",
-      "pluginId": "grafana-azure-data-explorer-datasource",
-      "pluginName": "Azure Data Explorer Datasource"
-    }
-  ],
   "__elements": {},
   "__requires": [
     {
@@ -58,6 +48,12 @@
       "id": "timeseries",
       "name": "Time series",
       "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "xychart",
+      "name": "XY Chart",
+      "version": ""
     }
   ],
   "annotations": {
@@ -97,7 +93,7 @@
     },
     {
       "gridPos": {
-        "h": 16,
+        "h": 18,
         "w": 24,
         "x": 0,
         "y": 1
@@ -109,7 +105,7 @@
           "showLineNumbers": false,
           "showMiniMap": false
         },
-        "content": "## 🚀 Desktop Transformation - Persona Mapping\n\nThis dashboard provides a comprehensive overview of **application inventory, usage, and performance** — essential data for planning and executing **desktop transformation initiatives**.\n\nInstead of assigning all users full personal virtual machines, you can use this data to:\n- Identify which apps are **actually used**\n- Understand the **performance impact** of those apps\n- Group users with similar needs\n- Deliver more **cost-effective, tailored desktop experiences**\n\n---\n\n## 🔍 Dashboard Structure — Each Row Answers a Key Question\n\n1. **What apps are installed?**  \n   → View all applications detected across endpoints and virtual machines.\n\n2. **What apps are used?**  \n   → Discover which apps are in foreground, how often, and by whom.\n\n3. **How well do these apps perform?**  \n   → Examine CPU, RAM, disk, and more metrics per app to gauge ressource consumption.\n\n4. **How are browsers being used?**  \n   → Analyze browser usage patterns to find candidates that can be assigned a browser only.\n\n---\n\n> 💡 Use filters at the top to narrow down by machine, app name, user, or time range.  \n> This dashboard helps you match **application needs to user personas**, and transition from \"one size fits all\" desktops to **right-sized solutions**.\n",
+        "content": "## 🚀 Desktop Transformation - Persona Mapping\n\nThis dashboard provides a comprehensive overview of **application inventory, usage, and performance** — essential data for planning and executing **desktop transformation initiatives**.\n\nInstead of assigning all users full personal virtual machines, you can use this data to:\n- Identify which apps are **actually used**\n- Understand the **performance impact** of those apps\n- Group users with similar needs\n- Deliver more **cost-effective, tailored desktop experiences**\n\n---\n\n## 🔍 Dashboard Structure — Each Row Answers a Key Question\n\n1. **What apps are installed?**  \n   → View all applications detected across endpoints and virtual machines.\n\n2. **What apps are used?**  \n   → Discover which apps are in foreground, how often, and by whom.\n\n3. **How well do these apps perform?**  \n   → Examine CPU, RAM, disk, and more metrics per app to gauge ressource consumption.\n\n4. **How are browsers being used?**  \n   → Analyze browser usage patterns to find candidates that can be assigned a browser only.\n\n---\n\n## ©️ Credits\n\n- Thanks to [Matthew Greenbaum](https://www.linkedin.com/in/matthew-greenbaum) for the idea for the **App importance** chart.\n\n---\n\n> 💡 Use filters at the top to narrow down by machine, app name, user, or time range.  \n> This dashboard helps you match **application needs to user personas**, and transition from \"one size fits all\" desktops to **right-sized solutions**.\n",
         "mode": "markdown"
       },
       "pluginVersion": "11.6.0",
@@ -121,14 +117,14 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 17
+        "y": 19
       },
       "id": 9,
       "panels": [
         {
           "datasource": {
             "type": "grafana-azure-data-explorer-datasource",
-            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+            "uid": ""
           },
           "fieldConfig": {
             "defaults": {
@@ -215,7 +211,7 @@
         {
           "datasource": {
             "type": "grafana-azure-data-explorer-datasource",
-            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+            "uid": ""
           },
           "fieldConfig": {
             "defaults": {
@@ -302,7 +298,7 @@
         {
           "datasource": {
             "type": "grafana-azure-data-explorer-datasource",
-            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+            "uid": ""
           },
           "fieldConfig": {
             "defaults": {
@@ -389,7 +385,7 @@
         {
           "datasource": {
             "type": "grafana-azure-data-explorer-datasource",
-            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+            "uid": ""
           },
           "description": "The total number of times any app appears across all devices",
           "fieldConfig": {
@@ -477,7 +473,7 @@
         {
           "datasource": {
             "type": "grafana-azure-data-explorer-datasource",
-            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+            "uid": ""
           },
           "fieldConfig": {
             "defaults": {
@@ -527,7 +523,7 @@
             "h": 10,
             "w": 12,
             "x": 0,
-            "y": 21
+            "y": 49
           },
           "id": 13,
           "options": {
@@ -591,7 +587,7 @@
         {
           "datasource": {
             "type": "grafana-azure-data-explorer-datasource",
-            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+            "uid": ""
           },
           "fieldConfig": {
             "defaults": {
@@ -642,7 +638,7 @@
             "h": 10,
             "w": 12,
             "x": 12,
-            "y": 21
+            "y": 49
           },
           "id": 14,
           "options": {
@@ -706,7 +702,7 @@
         {
           "datasource": {
             "type": "grafana-azure-data-explorer-datasource",
-            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+            "uid": ""
           },
           "fieldConfig": {
             "defaults": {
@@ -743,7 +739,7 @@
             "h": 13,
             "w": 24,
             "x": 0,
-            "y": 31
+            "y": 107
           },
           "id": 15,
           "options": {
@@ -805,16 +801,210 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 18
+        "y": 20
       },
       "id": 6,
       "panels": [
         {
+          "fieldConfig": {
+            "defaults": {},
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 10,
+            "w": 24,
+            "x": 0,
+            "y": 21
+          },
+          "id": 26,
+          "options": {
+            "code": {
+              "language": "plaintext",
+              "showLineNumbers": false,
+              "showMiniMap": false
+            },
+            "content": "## App importance\nThe chart **App importance** below shows which applications contribute most to your organization’s productivity or system load, so you can focus on the handful that matter.\n\n**Key drivers of importance:**  \n - **User engagement:** How long and how often people actively use an app.\n - **Resource impact:** How much CPU work an app does, even when running in the background.\n\nYou can use the dashboard variable **App importance usage weight** to manipulate the weights.\n\n**X-axis (Rank):**  \n  - Apps sorted from highest to lowest importance.\n\n**Y-axis (Cumulative %):**  \n  - How much of the total importance has been covered once you include apps up to that rank—showing the “few apps, big impact” effect.  \n",
+            "mode": "markdown"
+          },
+          "pluginVersion": "11.6.0",
+          "title": "",
+          "transparent": true,
+          "type": "text"
+        },
+        {
           "datasource": {
             "type": "grafana-azure-data-explorer-datasource",
-            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+            "uid": "${datasource}"
           },
-          "description": "Foreground apps are your most important ones. They are not only installed and running in the background, they are actively used by your users.",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "axisSoftMax": 100,
+                "axisSoftMin": 0,
+                "fillOpacity": 50,
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "pointShape": "circle",
+                "pointSize": {
+                  "fixed": 5
+                },
+                "pointStrokeWidth": 1,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "show": "points+lines"
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "cumulative_percent"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "percent"
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 31
+          },
+          "id": 25,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": false
+            },
+            "mapping": "auto",
+            "series": [
+              {
+                "frame": {
+                  "matcher": {
+                    "id": "byIndex",
+                    "options": 0
+                  }
+                },
+                "x": {
+                  "matcher": {
+                    "id": "byName",
+                    "options": "rank"
+                  }
+                },
+                "y": {
+                  "matcher": {
+                    "id": "byName",
+                    "options": "cumulative_percent"
+                  }
+                }
+              }
+            ],
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "11.6.0",
+          "targets": [
+            {
+              "OpenAI": false,
+              "clusterUri": "$cluster",
+              "database": "$database",
+              "datasource": {
+                "type": "grafana-azure-data-explorer-datasource",
+                "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+              },
+              "expression": {
+                "groupBy": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "reduce": {
+                  "expressions": [],
+                  "type": "and"
+                },
+                "where": {
+                  "expressions": [],
+                  "type": "and"
+                }
+              },
+              "pluginVersion": "6.0.0",
+              "query": "// Summarize foreground usage per app\r\nlet FgSummary = \r\n    Session_SessionDetail\r\n    | where $__timeFilter(Timestamp)\r\n    | where SessionFgAppId != \"\"\r\n    | summarize \r\n        TotalFgCount = count()\r\n      by App = SessionFgAppId;\r\n// Summarize CPU usage per app\r\nlet CpuSummary = \r\n    Process_ProcessDetail\r\n    | where $__timeFilter(Timestamp)\r\n    | where AppId != \"\"\r\n    | summarize \r\n        TotalCpuMs = sum(ProcCPUTimeMs) \r\n      by App = AppId;\r\nlet JoinedAll = \r\n  FgSummary\r\n  | join kind=fullouter CpuSummary on App\r\n  | extend\r\n      App         = coalesce(App, App1),  \r\n      TotalFgCount = coalesce(todouble(TotalFgCount), 0.0),\r\n      TotalCpuMs = coalesce(todouble(TotalCpuMs), 0.0)\r\n  | where isnotempty(App);\r\nlet minFg  = toscalar(JoinedAll | summarize min(TotalFgCount));\r\nlet maxFg  = toscalar(JoinedAll | summarize max(TotalFgCount));\r\nlet minCpu = toscalar(JoinedAll | summarize min(TotalCpuMs));\r\nlet maxCpu = toscalar(JoinedAll | summarize max(TotalCpuMs));\r\nlet Scored =\r\n    JoinedAll\r\n    | extend cpu = 1 - $app_imp_usage\r\n    | extend\r\n        F = (TotalFgCount - minFg)  / (maxFg  - minFg),\r\n        C = (TotalCpuMs - minCpu) / (maxCpu - minCpu)\r\n    | extend Score = $app_imp_usage * F + cpu * C\r\n;\r\nlet TotalScore = toscalar(Scored | summarize sum(Score));\r\nScored\r\n| extend \r\n    PctOfTotal = Score / TotalScore\r\n| sort by Score desc\r\n| extend \r\n    rank   = row_number(),                // ← assign rank 1..n\r\n    cumulative_percent = 100 * row_cumsum(PctOfTotal)       // ← cumulative share\r\n| project rank, app = App, cumulative_percent",
+              "querySource": "raw",
+              "queryType": "KQL",
+              "rawMode": true,
+              "refId": "A",
+              "resultFormat": "table"
+            }
+          ],
+          "title": "App importance",
+          "type": "xychart"
+        },
+        {
+          "fieldConfig": {
+            "defaults": {},
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 24,
+            "x": 0,
+            "y": 39
+          },
+          "id": 27,
+          "options": {
+            "code": {
+              "language": "plaintext",
+              "showLineNumbers": false,
+              "showMiniMap": false
+            },
+            "content": "## App foreground usage over time  \nThis chart shows how much your users are actively working in applications across the selected period. It helps you:\n\n- **Spot overall trends:** See if engagement is growing, stable, or declining over days/weeks.  \n- **Identify daily rhythms:** Notice repeatable peaks during core work hours and dips during off-hours or weekends.  \n- **Detect anomalies:** Sudden surges or drops may signal new feature rollouts, system issues, or company events.  \n- **Plan proactively:** Use long-term patterns to forecast capacity needs, schedule maintenance, or target user training when engagement lags.\n\nKeep an eye on this chart to understand when your team is most productive and to catch unexpected shifts in usage early.  \n",
+            "mode": "markdown"
+          },
+          "pluginVersion": "11.6.0",
+          "title": "",
+          "transparent": true,
+          "type": "text"
+        },
+        {
+          "datasource": {
+            "type": "grafana-azure-data-explorer-datasource",
+            "uid": ""
+          },
+          "description": "",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -874,7 +1064,7 @@
             "h": 8,
             "w": 24,
             "x": 0,
-            "y": 19
+            "y": 46
           },
           "id": 1,
           "options": {
@@ -923,13 +1113,13 @@
               "resultFormat": "table"
             }
           ],
-          "title": "App foreground usage",
+          "title": "App foreground usage over time",
           "type": "timeseries"
         },
         {
           "datasource": {
             "type": "grafana-azure-data-explorer-datasource",
-            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+            "uid": ""
           },
           "description": "Lists all versions, users and computers by app, whether in foreground or not. Columns can be filtered.\n\nClick on an app to filter the charts below.",
           "fieldConfig": {
@@ -985,7 +1175,7 @@
             "h": 13,
             "w": 24,
             "x": 0,
-            "y": 27
+            "y": 54
           },
           "id": 5,
           "options": {
@@ -1046,7 +1236,7 @@
         {
           "datasource": {
             "type": "grafana-azure-data-explorer-datasource",
-            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+            "uid": ""
           },
           "description": "",
           "fieldConfig": {
@@ -1108,7 +1298,7 @@
             "h": 13,
             "w": 24,
             "x": 0,
-            "y": 40
+            "y": 67
           },
           "id": 16,
           "options": {
@@ -1163,7 +1353,7 @@
         {
           "datasource": {
             "type": "grafana-azure-data-explorer-datasource",
-            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+            "uid": ""
           },
           "description": "Select an app in the data table above to filter this chart.",
           "fieldConfig": {
@@ -1200,7 +1390,7 @@
             "h": 14,
             "w": 24,
             "x": 0,
-            "y": 53
+            "y": 80
           },
           "id": 17,
           "options": {
@@ -1262,7 +1452,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 19
+        "y": 21
       },
       "id": 18,
       "panels": [
@@ -1275,7 +1465,7 @@
             "h": 2,
             "w": 24,
             "x": 0,
-            "y": 94
+            "y": 170
           },
           "id": 20,
           "options": {
@@ -1300,7 +1490,7 @@
             "h": 3,
             "w": 24,
             "x": 0,
-            "y": 112
+            "y": 188
           },
           "id": 19,
           "options": {
@@ -1329,14 +1519,14 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 20
+        "y": 22
       },
       "id": 22,
       "panels": [
         {
           "datasource": {
             "type": "grafana-azure-data-explorer-datasource",
-            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+            "uid": ""
           },
           "description": "Shows all users who had a browser in foreground more than ${browser_usage_threshold}% of the time. The threshold can be set at the dashboard's top.",
           "fieldConfig": {
@@ -1374,7 +1564,7 @@
             "h": 8,
             "w": 24,
             "x": 0,
-            "y": 21
+            "y": 49
           },
           "id": 23,
           "options": {
@@ -1435,7 +1625,7 @@
         {
           "datasource": {
             "type": "grafana-azure-data-explorer-datasource",
-            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
+            "uid": ""
           },
           "description": "If the foreground window is a browser: the URL of the active tab.",
           "fieldConfig": {
@@ -1472,7 +1662,7 @@
             "h": 8,
             "w": 24,
             "x": 0,
-            "y": 29
+            "y": 105
           },
           "id": 24,
           "options": {
@@ -1660,6 +1850,24 @@
       },
       {
         "current": {
+          "text": "0.8",
+          "value": "0.8"
+        },
+        "description": "Foreground‐usage weight in decimal notation (0.0–1.0).\n\nExample: 0.8 means 80% emphasis on app foreground usage; the rest (100-80=20%) represents the CPU‐usage weight.",
+        "label": "App importance usage weight",
+        "name": "app_imp_usage",
+        "options": [
+          {
+            "selected": true,
+            "text": "0.8",
+            "value": "0.8"
+          }
+        ],
+        "query": "0.8",
+        "type": "textbox"
+      },
+      {
+        "current": {
           "text": "0",
           "value": "0"
         },
@@ -1720,7 +1928,7 @@
             "value": "1d"
           }
         ],
-        "query": "1m,5m,,10m,15m,30m,1h,1d",
+        "query": "1m,5m,10m,15m,30m,1h,1d",
         "type": "custom"
       }
     ]
@@ -1734,5 +1942,13 @@
   "title": "Desktop Transformation - Persona Mapping",
   "uid": "",
   "version": 1,
-  "weekStart": ""
+  "weekStart": "",
+  "__inputs": [
+    {
+      "name": "DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE",
+      "label": "grafana-azure-data-explorer-datasource",
+      "pluginId": "grafana-azure-data-explorer-datasource",
+      "pluginName": "Azure Data Explorer Datasource"
+    }
+  ]
 }

@@ -58,6 +58,12 @@
       "id": "timeseries",
       "name": "Time series",
       "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "xychart",
+      "name": "XY Chart",
+      "version": ""
     }
   ],
   "annotations": {
@@ -97,7 +103,7 @@
     },
     {
       "gridPos": {
-        "h": 16,
+        "h": 18,
         "w": 24,
         "x": 0,
         "y": 1
@@ -109,7 +115,7 @@
           "showLineNumbers": false,
           "showMiniMap": false
         },
-        "content": "## 🚀 Desktop Transformation - Persona Mapping\n\nThis dashboard provides a comprehensive overview of **application inventory, usage, and performance** — essential data for planning and executing **desktop transformation initiatives**.\n\nInstead of assigning all users full personal virtual machines, you can use this data to:\n- Identify which apps are **actually used**\n- Understand the **performance impact** of those apps\n- Group users with similar needs\n- Deliver more **cost-effective, tailored desktop experiences**\n\n---\n\n## 🔍 Dashboard Structure — Each Row Answers a Key Question\n\n1. **What apps are installed?**  \n   → View all applications detected across endpoints and virtual machines.\n\n2. **What apps are used?**  \n   → Discover which apps are in foreground, how often, and by whom.\n\n3. **How well do these apps perform?**  \n   → Examine CPU, RAM, disk, and more metrics per app to gauge ressource consumption.\n\n4. **How are browsers being used?**  \n   → Analyze browser usage patterns to find candidates that can be assigned a browser only.\n\n---\n\n> 💡 Use filters at the top to narrow down by machine, app name, user, or time range.  \n> This dashboard helps you match **application needs to user personas**, and transition from \"one size fits all\" desktops to **right-sized solutions**.\n",
+        "content": "## 🚀 Desktop Transformation - Persona Mapping\n\nThis dashboard provides a comprehensive overview of **application inventory, usage, and performance** — essential data for planning and executing **desktop transformation initiatives**.\n\nInstead of assigning all users full personal virtual machines, you can use this data to:\n- Identify which apps are **actually used**\n- Understand the **performance impact** of those apps\n- Group users with similar needs\n- Deliver more **cost-effective, tailored desktop experiences**\n\n---\n\n## 🔍 Dashboard Structure — Each Row Answers a Key Question\n\n1. **What apps are installed?**  \n   → View all applications detected across endpoints and virtual machines.\n\n2. **What apps are used?**  \n   → Discover which apps are in foreground, how often, and by whom.\n\n3. **How well do these apps perform?**  \n   → Examine CPU, RAM, disk, and more metrics per app to gauge ressource consumption.\n\n4. **How are browsers being used?**  \n   → Analyze browser usage patterns to find candidates that can be assigned a browser only.\n\n---\n\n## ©️ Credits\n\n- Thanks to [Matthew Greenbaum](https://www.linkedin.com/in/matthew-greenbaum) for the idea for the **App importance** chart.\n\n---\n\n> 💡 Use filters at the top to narrow down by machine, app name, user, or time range.  \n> This dashboard helps you match **application needs to user personas**, and transition from \"one size fits all\" desktops to **right-sized solutions**.\n",
         "mode": "markdown"
       },
       "pluginVersion": "11.6.0",
@@ -121,7 +127,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 17
+        "y": 19
       },
       "id": 9,
       "panels": [
@@ -665,7 +671,7 @@
             "h": 13,
             "w": 24,
             "x": 0,
-            "y": 31
+            "y": 79
           },
           "id": 15,
           "options": {
@@ -714,404 +720,580 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 18
+        "y": 20
       },
       "id": 6,
-      "panels": [
-        {
-          "datasource": {
-            "type": "grafana-azure-monitor-datasource",
-            "uid": "${DS_GRAFANA-AZURE-MONITOR-DATASOURCE}"
-          },
-          "description": "Foreground apps are your most important ones. They are not only installed and running in the background, they are actively used by your users.",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisBorderShow": false,
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "Count",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "barWidthFactor": 0.6,
-                "drawStyle": "bars",
-                "fillOpacity": 100,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "insertNulls": false,
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "min": 0,
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green"
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              }
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 24,
-            "x": 0,
-            "y": 19
-          },
-          "id": 1,
-          "options": {
-            "legend": {
-              "calcs": [],
-              "displayMode": "list",
-              "placement": "right",
-              "showLegend": true
-            },
-            "tooltip": {
-              "hideZeros": false,
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "pluginVersion": "11.6.0",
-          "targets": [
-            {
-              "azureLogAnalytics": {
-                "dashboardTime": false,
-                "query": "uberAgent_Session_SessionDetail_CL\r\n| where $__timeFilter(TimeGenerated)\r\n| where SessionFgProcessName_s != \"\"\r\n| summarize Count = count() by bin(TimeGenerated, $time_agg), SessionFgAppId_s\r\n| evaluate pivot(SessionFgAppId_s, sum(Count))\r\n| sort by TimeGenerated",
-                "resources": [
-                  "/subscriptions/$subscription/resourceGroups/$resource_group/providers/Microsoft.OperationalInsights/workspaces/$workspace"
-                ],
-                "resultFormat": "logs",
-                "timeColumn": "TimeGenerated"
-              },
-              "datasource": {
-                "type": "grafana-azure-monitor-datasource",
-                "uid": "${DS_GRAFANA-AZURE-MONITOR-DATASOURCE}"
-              },
-              "queryType": "Azure Log Analytics",
-              "refId": "A"
-            }
-          ],
-          "title": "App foreground usage",
-          "type": "timeseries"
-        },
-        {
-          "datasource": {
-            "type": "grafana-azure-monitor-datasource",
-            "uid": "${DS_GRAFANA-AZURE-MONITOR-DATASOURCE}"
-          },
-          "description": "Lists all versions, users and computers by app, whether in foreground or not. Columns can be filtered.\n\nClick on an app to filter the charts below.",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "thresholds"
-              },
-              "custom": {
-                "align": "auto",
-                "cellOptions": {
-                  "type": "auto"
-                },
-                "filterable": true,
-                "inspect": false
-              },
-              "links": [],
-              "mappings": [],
-              "min": 0,
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green"
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              }
-            },
-            "overrides": [
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "App"
-                },
-                "properties": [
-                  {
-                    "id": "links",
-                    "value": [
-                      {
-                        "title": "Filter dashboard",
-                        "url": "d/${__dashboard.uid}﻿/desktop-transformation-persona-mapping?var-Computer=${Computer}&var-User=${User}&var-App=${__data.fields[\"App\"]}"
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          },
-          "gridPos": {
-            "h": 13,
-            "w": 24,
-            "x": 0,
-            "y": 27
-          },
-          "id": 5,
-          "options": {
-            "cellHeight": "sm",
-            "footer": {
-              "countRows": true,
-              "enablePagination": true,
-              "fields": "",
-              "reducer": [
-                "count"
-              ],
-              "show": true
-            },
-            "showHeader": true,
-            "sortBy": [
-              {
-                "desc": true,
-                "displayName": "Users"
-              }
-            ]
-          },
-          "pluginVersion": "11.6.0",
-          "targets": [
-            {
-              "azureLogAnalytics": {
-                "dashboardTime": false,
-                "query": "uberAgent_Process_ProcessDetail_CL\r\n| where $__timeFilter(TimeGenerated)\r\n| where AppId_s !in (\"Microsoft Windows OS\",\"MsWnOS\",\"macOS\") \r\n| where ProcUser_s !in (\"sys\",\"nvc\",\"lvc\")\r\n| where AppId_s has \"$App\"\r\n| summarize \r\nVersions = count_distinct(AppVersion_s),\r\nUsers = count_distinct(ProcUser_s),\r\nComputers = count_distinct(Computer)\r\nby App = AppId_s\r\n| sort by App asc\r\n",
-                "resources": [
-                  "/subscriptions/$subscription/resourceGroups/$resource_group/providers/Microsoft.OperationalInsights/workspaces/$workspace"
-                ],
-                "resultFormat": "logs",
-                "timeColumn": "TimeGenerated"
-              },
-              "datasource": {
-                "type": "grafana-azure-monitor-datasource",
-                "uid": "${DS_GRAFANA-AZURE-MONITOR-DATASOURCE}"
-              },
-              "queryType": "Azure Log Analytics",
-              "refId": "A"
-            }
-          ],
-          "title": "App usage data table",
-          "type": "table"
-        },
-        {
-          "datasource": {
-            "type": "grafana-azure-monitor-datasource",
-            "uid": "${DS_GRAFANA-AZURE-MONITOR-DATASOURCE}"
-          },
-          "description": "",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisBorderShow": false,
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "barWidthFactor": 0.6,
-                "drawStyle": "line",
-                "fillOpacity": 0,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "insertNulls": false,
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "min": 0,
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green"
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              }
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 13,
-            "w": 24,
-            "x": 0,
-            "y": 40
-          },
-          "id": 16,
-          "options": {
-            "legend": {
-              "calcs": [],
-              "displayMode": "list",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "hideZeros": false,
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "pluginVersion": "11.6.0",
-          "targets": [
-            {
-              "azureLogAnalytics": {
-                "dashboardTime": false,
-                "query": "uberAgent_Process_ProcessDetail_CL\r\n| where $__timeFilter(TimeGenerated)\r\n| where SessionID_d > 0\r\n| where AppId_s !in~ (\"Microsoft Windows OS\",\"MsWnOS\",\"macOS\") \r\n| where ProcUser_s !in~ (\"sys\",\"nvc\",\"lvc\")\r\n| where AppId_s has \"$App\"\r\n| summarize usage = count_distinct(ProcUser_s) by bin(TimeGenerated, $time_agg), AppId_s\r\n| evaluate pivot(AppId_s, max(usage))\r\n",
-                "resources": [
-                  "/subscriptions/$subscription/resourceGroups/$resource_group/providers/Microsoft.OperationalInsights/workspaces/$workspace"
-                ],
-                "resultFormat": "logs",
-                "timeColumn": "TimeGenerated"
-              },
-              "datasource": {
-                "type": "grafana-azure-monitor-datasource",
-                "uid": "${DS_GRAFANA-AZURE-MONITOR-DATASOURCE}"
-              },
-              "queryType": "Azure Log Analytics",
-              "refId": "A"
-            }
-          ],
-          "title": "Usage over time",
-          "type": "timeseries"
-        },
-        {
-          "datasource": {
-            "type": "grafana-azure-monitor-datasource",
-            "uid": "${DS_GRAFANA-AZURE-MONITOR-DATASOURCE}"
-          },
-          "description": "Select an app in the data table above to filter this chart.",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "thresholds"
-              },
-              "custom": {
-                "align": "auto",
-                "cellOptions": {
-                  "type": "auto"
-                },
-                "filterable": true,
-                "inspect": false
-              },
-              "mappings": [],
-              "min": 0,
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green"
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              }
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 14,
-            "w": 24,
-            "x": 0,
-            "y": 53
-          },
-          "id": 17,
-          "options": {
-            "cellHeight": "sm",
-            "footer": {
-              "countRows": true,
-              "enablePagination": true,
-              "fields": "",
-              "reducer": [
-                "count"
-              ],
-              "show": true
-            },
-            "showHeader": true
-          },
-          "pluginVersion": "11.6.0",
-          "targets": [
-            {
-              "azureLogAnalytics": {
-                "dashboardTime": false,
-                "query": "uberAgent_Process_ProcessDetail_CL\r\n| where $__timeFilter(TimeGenerated)\r\n| where AppId_s !in (\"Microsoft Windows OS\",\"MsWnOS\",\"macOS\") \r\n| where ProcUser_s !in (\"sys\",\"nvc\",\"lvc\")\r\n| where AppId_s has \"$App\"\r\n| summarize \r\nby App = AppId_s, Version = AppVersion_s, User = ProcUser_s, Machine = Computer\r\n| sort by App asc, Version asc, User asc \r\n",
-                "resources": [
-                  "/subscriptions/$subscription/resourceGroups/$resource_group/providers/Microsoft.OperationalInsights/workspaces/$workspace"
-                ],
-                "resultFormat": "logs",
-                "timeColumn": "TimeGenerated"
-              },
-              "datasource": {
-                "type": "grafana-azure-monitor-datasource",
-                "uid": "${DS_GRAFANA-AZURE-MONITOR-DATASOURCE}"
-              },
-              "queryType": "Azure Log Analytics",
-              "refId": "A"
-            }
-          ],
-          "title": "Usage detail",
-          "type": "table"
-        }
-      ],
+      "panels": [],
       "title": "What apps are used?",
       "type": "row"
+    },
+    {
+      "gridPos": {
+        "h": 10,
+        "w": 24,
+        "x": 0,
+        "y": 21
+      },
+      "id": 26,
+      "options": {
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
+        },
+        "content": "## App importance\nThe chart **App importance** below shows which applications contribute most to your organization’s productivity or system load, so you can focus on the handful that matter.\n\n**Key drivers of importance:**  \n - **User engagement:** How long and how often people actively use an app.\n - **Resource impact:** How much CPU work an app does, even when running in the background.\n\nYou can use the dashboard variable **App importance usage weight** to manipulate the weights.\n\n**X-axis (Rank):**  \n  - Apps sorted from highest to lowest importance.\n\n**Y-axis (Cumulative %):**  \n  - How much of the total importance has been covered once you include apps up to that rank—showing the “few apps, big impact” effect.  \n",
+        "mode": "markdown"
+      },
+      "pluginVersion": "11.6.0",
+      "transparent": true,
+      "type": "text"
+    },
+    {
+      "datasource": {
+        "type": "grafana-azure-monitor-datasource",
+        "uid": "${datasource}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "axisSoftMax": 100,
+            "axisSoftMin": 0,
+            "fillOpacity": 50,
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "pointShape": "circle",
+            "pointSize": {
+              "fixed": 5
+            },
+            "pointStrokeWidth": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "show": "points+lines"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "cumulative_percent"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 31
+      },
+      "id": 25,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "mapping": "auto",
+        "series": [
+          {
+            "frame": {
+              "matcher": {
+                "id": "byIndex",
+                "options": 0
+              }
+            },
+            "x": {
+              "matcher": {
+                "id": "byName",
+                "options": "rank"
+              }
+            },
+            "y": {
+              "matcher": {
+                "id": "byName",
+                "options": "cumulative_percent"
+              }
+            }
+          }
+        ],
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.6.0",
+      "targets": [
+        {
+          "azureLogAnalytics": {
+            "dashboardTime": false,
+            "mode": "builder",
+            "query": "// Summarize foreground usage per app\r\nlet FgSummary = \r\n    uberAgent_Session_SessionDetail_CL\r\n    | where $__timeFilter(TimeGenerated)\r\n    | where SessionFgAppId_s != \"\"\r\n    | summarize \r\n        TotalFgCount = count()\r\n      by App = SessionFgAppId_s;\r\n// Summarize CPU usage per app\r\nlet CpuSummary = \r\n    uberAgent_Process_ProcessDetail_CL\r\n    | where $__timeFilter(TimeGenerated)\r\n    | where AppId_s != \"\"\r\n    | summarize \r\n        TotalCpuMs = sum(ProcCPUTimeMs_d) \r\n      by App = AppId_s;\r\nlet JoinedAll = \r\n  FgSummary\r\n  | join kind=fullouter CpuSummary on App\r\n  | extend\r\n      App         = coalesce(App, App1),  \r\n      TotalFgCount = coalesce(todouble(TotalFgCount), 0.0),\r\n      TotalCpuMs = coalesce(todouble(TotalCpuMs), 0.0)\r\n  | where isnotempty(App);\r\nlet minFg  = toscalar(JoinedAll | summarize min(TotalFgCount));\r\nlet maxFg  = toscalar(JoinedAll | summarize max(TotalFgCount));\r\nlet minCpu = toscalar(JoinedAll | summarize min(TotalCpuMs));\r\nlet maxCpu = toscalar(JoinedAll | summarize max(TotalCpuMs));\r\nlet Scored =\r\n    JoinedAll\r\n    | extend cpu_w = 1 - $app_imp_usage\r\n    | extend\r\n        F = (TotalFgCount - minFg)  / (maxFg  - minFg),\r\n        C = (TotalCpuMs - minCpu) / (maxCpu - minCpu)\r\n    | extend Score = $app_imp_usage * F + cpu_w * C\r\n;\r\nlet TotalScore = toscalar(Scored | summarize sum(Score));\r\nScored\r\n| extend \r\n    PctOfTotal = Score / TotalScore\r\n| sort by Score desc\r\n| extend \r\n    rank   = row_number(),                // ← assign rank 1..n\r\n    cumulative_percent = 100 * row_cumsum(PctOfTotal)       // ← cumulative share\r\n| project rank, app = App, cumulative_percent",
+            "resources": [
+              "/subscriptions/$subscription/resourceGroups/$resource_group/providers/Microsoft.OperationalInsights/workspaces/$workspace"
+            ],
+            "resultFormat": "logs",
+            "timeColumn": "TimeGenerated"
+          },
+          "azureMonitor": {
+            "allowedTimeGrainsMs": [],
+            "timeGrain": "auto"
+          },
+          "datasource": {
+            "type": "grafana-azure-monitor-datasource",
+            "uid": "${DS_GRAFANA-AZURE-MONITOR-DATASOURCE}"
+          },
+          "queryType": "Azure Log Analytics",
+          "refId": "A"
+        }
+      ],
+      "title": "App importance",
+      "type": "xychart"
+    },
+    {
+      "gridPos": {
+        "h": 7,
+        "w": 24,
+        "x": 0,
+        "y": 39
+      },
+      "id": 27,
+      "options": {
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
+        },
+        "content": "## App foreground usage over time  \nThis chart shows how much your users are actively working in applications across the selected period. It helps you:\n\n- **Spot overall trends:** See if engagement is growing, stable, or declining over days/weeks.  \n- **Identify daily rhythms:** Notice repeatable peaks during core work hours and dips during off-hours or weekends.  \n- **Detect anomalies:** Sudden surges or drops may signal new feature rollouts, system issues, or company events.  \n- **Plan proactively:** Use long-term patterns to forecast capacity needs, schedule maintenance, or target user training when engagement lags.\n\nKeep an eye on this chart to understand when your team is most productive and to catch unexpected shifts in usage early.  \n",
+        "mode": "markdown"
+      },
+      "pluginVersion": "11.6.0",
+      "transparent": true,
+      "type": "text"
+    },
+    {
+      "datasource": {
+        "type": "grafana-azure-monitor-datasource",
+        "uid": "${DS_GRAFANA-AZURE-MONITOR-DATASOURCE}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "Count",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "bars",
+            "fillOpacity": 100,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 46
+      },
+      "id": 1,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "right",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.6.0",
+      "targets": [
+        {
+          "azureLogAnalytics": {
+            "dashboardTime": false,
+            "mode": "raw",
+            "query": "uberAgent_Session_SessionDetail_CL\r\n| where $__timeFilter(TimeGenerated)\r\n| where SessionFgProcessName_s != \"\"\r\n| summarize Count = count() by bin(TimeGenerated, $time_agg), SessionFgAppId_s\r\n| evaluate pivot(SessionFgAppId_s, sum(Count))\r\n| sort by TimeGenerated",
+            "resources": [
+              "/subscriptions/$subscription/resourceGroups/$resource_group/providers/Microsoft.OperationalInsights/workspaces/$workspace"
+            ],
+            "resultFormat": "logs",
+            "timeColumn": "TimeGenerated"
+          },
+          "datasource": {
+            "type": "grafana-azure-monitor-datasource",
+            "uid": "${DS_GRAFANA-AZURE-MONITOR-DATASOURCE}"
+          },
+          "queryType": "Azure Log Analytics",
+          "refId": "A"
+        }
+      ],
+      "title": "App foreground usage over time",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "grafana-azure-monitor-datasource",
+        "uid": "${DS_GRAFANA-AZURE-MONITOR-DATASOURCE}"
+      },
+      "description": "Lists all versions, users and computers by app, whether in foreground or not. Columns can be filtered.\n\nClick on an app to filter the charts below.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "filterable": true,
+            "inspect": false
+          },
+          "links": [],
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "App"
+            },
+            "properties": [
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "title": "Filter dashboard",
+                    "url": "d/${__dashboard.uid}﻿/desktop-transformation-persona-mapping?var-Computer=${Computer}&var-User=${User}&var-App=${__data.fields[\"App\"]}"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 13,
+        "w": 24,
+        "x": 0,
+        "y": 54
+      },
+      "id": 5,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": true,
+          "enablePagination": true,
+          "fields": "",
+          "reducer": [
+            "count"
+          ],
+          "show": true
+        },
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "Users"
+          }
+        ]
+      },
+      "pluginVersion": "11.6.0",
+      "targets": [
+        {
+          "azureLogAnalytics": {
+            "dashboardTime": false,
+            "query": "uberAgent_Process_ProcessDetail_CL\r\n| where $__timeFilter(TimeGenerated)\r\n| where AppId_s !in (\"Microsoft Windows OS\",\"MsWnOS\",\"macOS\") \r\n| where ProcUser_s !in (\"sys\",\"nvc\",\"lvc\")\r\n| where AppId_s has \"$App\"\r\n| summarize \r\nVersions = count_distinct(AppVersion_s),\r\nUsers = count_distinct(ProcUser_s),\r\nComputers = count_distinct(Computer)\r\nby App = AppId_s\r\n| sort by App asc\r\n",
+            "resources": [
+              "/subscriptions/$subscription/resourceGroups/$resource_group/providers/Microsoft.OperationalInsights/workspaces/$workspace"
+            ],
+            "resultFormat": "logs",
+            "timeColumn": "TimeGenerated"
+          },
+          "datasource": {
+            "type": "grafana-azure-monitor-datasource",
+            "uid": "${DS_GRAFANA-AZURE-MONITOR-DATASOURCE}"
+          },
+          "queryType": "Azure Log Analytics",
+          "refId": "A"
+        }
+      ],
+      "title": "App usage data table",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "grafana-azure-monitor-datasource",
+        "uid": "${DS_GRAFANA-AZURE-MONITOR-DATASOURCE}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 13,
+        "w": 24,
+        "x": 0,
+        "y": 67
+      },
+      "id": 16,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.6.0",
+      "targets": [
+        {
+          "azureLogAnalytics": {
+            "dashboardTime": false,
+            "query": "uberAgent_Process_ProcessDetail_CL\r\n| where $__timeFilter(TimeGenerated)\r\n| where SessionID_d > 0\r\n| where AppId_s !in~ (\"Microsoft Windows OS\",\"MsWnOS\",\"macOS\") \r\n| where ProcUser_s !in~ (\"sys\",\"nvc\",\"lvc\")\r\n| where AppId_s has \"$App\"\r\n| summarize usage = count_distinct(ProcUser_s) by bin(TimeGenerated, $time_agg), AppId_s\r\n| evaluate pivot(AppId_s, max(usage))\r\n",
+            "resources": [
+              "/subscriptions/$subscription/resourceGroups/$resource_group/providers/Microsoft.OperationalInsights/workspaces/$workspace"
+            ],
+            "resultFormat": "logs",
+            "timeColumn": "TimeGenerated"
+          },
+          "datasource": {
+            "type": "grafana-azure-monitor-datasource",
+            "uid": "${DS_GRAFANA-AZURE-MONITOR-DATASOURCE}"
+          },
+          "queryType": "Azure Log Analytics",
+          "refId": "A"
+        }
+      ],
+      "title": "Usage over time",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "grafana-azure-monitor-datasource",
+        "uid": "${DS_GRAFANA-AZURE-MONITOR-DATASOURCE}"
+      },
+      "description": "Select an app in the data table above to filter this chart.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "filterable": true,
+            "inspect": false
+          },
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 14,
+        "w": 24,
+        "x": 0,
+        "y": 80
+      },
+      "id": 17,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": true,
+          "enablePagination": true,
+          "fields": "",
+          "reducer": [
+            "count"
+          ],
+          "show": true
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "11.6.0",
+      "targets": [
+        {
+          "azureLogAnalytics": {
+            "dashboardTime": false,
+            "query": "uberAgent_Process_ProcessDetail_CL\r\n| where $__timeFilter(TimeGenerated)\r\n| where AppId_s !in (\"Microsoft Windows OS\",\"MsWnOS\",\"macOS\") \r\n| where ProcUser_s !in (\"sys\",\"nvc\",\"lvc\")\r\n| where AppId_s has \"$App\"\r\n| summarize \r\nby App = AppId_s, Version = AppVersion_s, User = ProcUser_s, Machine = Computer\r\n| sort by App asc, Version asc, User asc \r\n",
+            "resources": [
+              "/subscriptions/$subscription/resourceGroups/$resource_group/providers/Microsoft.OperationalInsights/workspaces/$workspace"
+            ],
+            "resultFormat": "logs",
+            "timeColumn": "TimeGenerated"
+          },
+          "datasource": {
+            "type": "grafana-azure-monitor-datasource",
+            "uid": "${DS_GRAFANA-AZURE-MONITOR-DATASOURCE}"
+          },
+          "queryType": "Azure Log Analytics",
+          "refId": "A"
+        }
+      ],
+      "title": "Usage detail",
+      "type": "table"
     },
     {
       "collapsed": true,
@@ -1119,7 +1301,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 19
+        "y": 94
       },
       "id": 18,
       "panels": [
@@ -1132,7 +1314,7 @@
             "h": 2,
             "w": 24,
             "x": 0,
-            "y": 94
+            "y": 142
           },
           "id": 20,
           "options": {
@@ -1157,7 +1339,7 @@
             "h": 3,
             "w": 24,
             "x": 0,
-            "y": 112
+            "y": 160
           },
           "id": 19,
           "options": {
@@ -1186,7 +1368,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 20
+        "y": 95
       },
       "id": 22,
       "panels": [
@@ -1316,7 +1498,7 @@
             "h": 8,
             "w": 24,
             "x": 0,
-            "y": 29
+            "y": 77
           },
           "id": 24,
           "options": {
@@ -1412,7 +1594,7 @@
         "current": {},
         "datasource": {
           "type": "grafana-azure-monitor-datasource",
-          "uid": "${datasource}"
+          "uid": "${DS_GRAFANA-AZURE-MONITOR-DATASOURCE}"
         },
         "definition": "",
         "label": "Resource group",
@@ -1510,6 +1692,24 @@
           }
         ],
         "query": "",
+        "type": "textbox"
+      },
+      {
+        "current": {
+          "text": "0.8",
+          "value": "0.8"
+        },
+        "description": "Foreground‐usage weight in decimal notation (0.0–1.0).\n\nExample: 0.8 means 80% emphasis on app foreground usage; the rest (100-80=20%) represents the CPU‐usage weight.",
+        "label": "App importance usage weight",
+        "name": "app_imp_usage",
+        "options": [
+          {
+            "selected": true,
+            "text": "0.8",
+            "value": "0.8"
+          }
+        ],
+        "query": "0.8",
         "type": "textbox"
       },
       {

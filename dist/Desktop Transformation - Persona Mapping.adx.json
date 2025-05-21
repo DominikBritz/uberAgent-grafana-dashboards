@@ -134,7 +134,7 @@
         {
           "datasource": {
             "type": "grafana-azure-data-explorer-datasource",
-            "uid": ""
+            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
           },
           "fieldConfig": {
             "defaults": {
@@ -221,7 +221,7 @@
         {
           "datasource": {
             "type": "grafana-azure-data-explorer-datasource",
-            "uid": ""
+            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
           },
           "fieldConfig": {
             "defaults": {
@@ -308,7 +308,7 @@
         {
           "datasource": {
             "type": "grafana-azure-data-explorer-datasource",
-            "uid": ""
+            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
           },
           "fieldConfig": {
             "defaults": {
@@ -395,7 +395,7 @@
         {
           "datasource": {
             "type": "grafana-azure-data-explorer-datasource",
-            "uid": ""
+            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
           },
           "description": "The total number of times any app appears across all devices",
           "fieldConfig": {
@@ -483,7 +483,7 @@
         {
           "datasource": {
             "type": "grafana-azure-data-explorer-datasource",
-            "uid": ""
+            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
           },
           "fieldConfig": {
             "defaults": {
@@ -597,7 +597,7 @@
         {
           "datasource": {
             "type": "grafana-azure-data-explorer-datasource",
-            "uid": ""
+            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
           },
           "fieldConfig": {
             "defaults": {
@@ -712,7 +712,7 @@
         {
           "datasource": {
             "type": "grafana-azure-data-explorer-datasource",
-            "uid": ""
+            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
           },
           "fieldConfig": {
             "defaults": {
@@ -1012,7 +1012,7 @@
         {
           "datasource": {
             "type": "grafana-azure-data-explorer-datasource",
-            "uid": ""
+            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
           },
           "description": "",
           "fieldConfig": {
@@ -1129,7 +1129,7 @@
         {
           "datasource": {
             "type": "grafana-azure-data-explorer-datasource",
-            "uid": ""
+            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
           },
           "description": "Lists all versions, users and computers by app, whether in foreground or not. Columns can be filtered.\n\nClick on an app to filter the charts below.",
           "fieldConfig": {
@@ -1246,7 +1246,7 @@
         {
           "datasource": {
             "type": "grafana-azure-data-explorer-datasource",
-            "uid": ""
+            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
           },
           "description": "",
           "fieldConfig": {
@@ -1363,7 +1363,7 @@
         {
           "datasource": {
             "type": "grafana-azure-data-explorer-datasource",
-            "uid": ""
+            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
           },
           "description": "Select an app in the data table above to filter this chart.",
           "fieldConfig": {
@@ -1536,7 +1536,7 @@
         {
           "datasource": {
             "type": "grafana-azure-data-explorer-datasource",
-            "uid": ""
+            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
           },
           "description": "Shows all users who had a browser in foreground more than ${browser_usage_threshold}% of the time. The threshold can be set at the dashboard's top.",
           "fieldConfig": {
@@ -1635,7 +1635,7 @@
         {
           "datasource": {
             "type": "grafana-azure-data-explorer-datasource",
-            "uid": ""
+            "uid": "${DS_GRAFANA-AZURE-DATA-EXPLORER-DATASOURCE}"
           },
           "description": "If the foreground window is a browser: the URL of the active tab.",
           "fieldConfig": {

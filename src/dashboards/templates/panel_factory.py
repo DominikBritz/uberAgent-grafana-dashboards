@@ -7,7 +7,14 @@ from grafana_foundation_sdk.models import common
 
 
 def azuremonitor_logs_query(query: str) -> azuremonitor.AzureLogsQuery:
-    return azuremonitor.AzureLogsQuery().query(query)
+    return (
+        azuremonitor.AzureLogsQuery()
+        .query(query)
+        .dashboard_time(False)
+        .result_format("logs")
+        .time_column("TimeGenerated")
+    )
+
 
 
 def default_timeseries() -> timeseries.Panel:
@@ -18,6 +25,7 @@ def default_timeseries() -> timeseries.Panel:
         .line_width(1)
         .fill_opacity(0)
         .point_size(5)
+        .min(0)
         .show_points(common.VisibilityMode.AUTO)
         .draw_style(common.GraphDrawStyle.LINE)
         .gradient_mode(common.GraphGradientMode.NONE)

@@ -31,7 +31,7 @@ def main():
         ds_queries = config["ds_queries"]
 
         dashboard = build_dashboard_poor_user_experience(ds_name, ds_queries)
-        dashboard_name = "Troubleshooting Poor User Experience 2"
+        dashboard_name = "Troubleshooting Poor User Experience"
         print(f"Dashboard name: {dashboard_name}")
         print(f"Building dashboards for data source {ds_name}")
         filename = f"{dashboard_name.replace(' ', '_').lower()}_{ds_name.replace(' ', '_').lower()}.json"

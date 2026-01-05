@@ -1,5 +1,8 @@
 from grafana_foundation_sdk.builders import (
     timeseries,
+    text,
+    table,
+    dashboard,
     common as common_builder,
     azuremonitor,
 )
@@ -47,4 +50,48 @@ def default_timeseries() -> timeseries.Panel:
                 common.GraphThresholdsStyleMode.OFF
             )
         )
+    )
+
+
+def text_panel(content: str, mode: str = "markdown") -> text.Panel:
+    """Create a text panel with markdown or plaintext content."""
+    return (
+        text.Panel()
+        .height(20)
+        .span(24)
+        .code(
+            text.CodeOptions()
+            .language("plaintext" if mode == "plaintext" else "markdown")
+            .show_line_numbers(False)
+            .show_mini_map(False)
+        )
+        .content(content)
+        .mode(mode)
+    )
+
+
+def default_table() -> table.Panel:
+    """Create a default table panel."""
+    return (
+        table.Panel()
+        .height(10)
+        .span(24)
+        .options(
+            table.TableOptions()
+            .cell_height("sm")
+            .show_header(True)
+            .footer(
+                table.TableFooterOptions()
+                .count_rows(False)
+                .show(False)
+            )
+        )
+    )
+
+
+def row_panel(title: str, collapsed: bool = True) -> dashboard.Row:
+    """Create a row panel for grouping other panels."""
+    return (
+        dashboard.Row(title)
+        .collapsed(collapsed)
     )

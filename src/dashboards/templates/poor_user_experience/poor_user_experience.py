@@ -73,7 +73,7 @@ def build_dashboard_poor_user_experience(data_source_name: str, queries: dict) -
 
         # Variables
         .with_variable(
-            datasource_variable("dashboard_datasource", "Data source", "grafana-azure-monitor-datasource")
+            datasource_variable("dashboard_datasource", "Data source", "grafana-azure-monitor-datasource" if data_source_name == "azuremonitor" else "grafana-azure-data-explorer-datasource")
         )
         .with_variable(
             textbox_variable(

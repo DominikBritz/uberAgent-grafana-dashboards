@@ -3,6 +3,7 @@ from grafana_foundation_sdk.models.dashboard import DataSourceRef
 from grafana_foundation_sdk.models import common
 from templates.panel_factory import (
     azuremonitor_logs_query,
+    azuredataindexplorer_query,
     default_timeseries,
     default_table,
 )
@@ -10,8 +11,10 @@ from templates.panel_factory import (
 def overview_session_delay_timeseries(query: str, datasource: str) -> timeseries.Panel:
    if datasource == "azuremonitor":
       target = azuremonitor_logs_query(query=query)
+   elif datasource == "azuredataindexplorer":
+      target = azuredataindexplorer_query(query=query)
    else:
-      raise ValueError(f"Unsupported data source: {datasource}") 
+      raise ValueError(f"Unsupported data source: {datasource}")
 
    return (
       default_timeseries()
@@ -25,8 +28,10 @@ def overview_session_delay_timeseries(query: str, datasource: str) -> timeseries
 def overview_session_count_timeseries(query: str, datasource: str) -> timeseries.Panel:
    if datasource == "azuremonitor":
       target = azuremonitor_logs_query(query=query)
+   elif datasource == "azuredataindexplorer":
+      target = azuredataindexplorer_query(query=query)
    else:
-      raise ValueError(f"Unsupported data source: {datasource}") 
+      raise ValueError(f"Unsupported data source: {datasource}")
 
    return (
       default_timeseries()
@@ -43,8 +48,10 @@ def overview_session_table(query: str, datasource: str) -> table.Panel:
    """Create a session table panel showing all sessions with details."""
    if datasource == "azuremonitor":
       target = azuremonitor_logs_query(query=query)
+   elif datasource == "azuredataindexplorer":
+      target = azuredataindexplorer_query(query=query)
    else:
-      raise ValueError(f"Unsupported data source: {datasource}") 
+      raise ValueError(f"Unsupported data source: {datasource}")
 
    return (
       default_table()

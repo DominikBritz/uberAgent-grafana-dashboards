@@ -1,13 +1,15 @@
 from grafana_foundation_sdk.builders import timeseries, azuremonitor
 from grafana_foundation_sdk.models.dashboard import DataSourceRef
-from templates.panel_factory import azuremonitor_logs_query, default_timeseries
+from templates.panel_factory import azuremonitor_logs_query, azuredataindexplorer_query, default_timeseries
 
 def app_input_delay_per_app_timeseries(query: str, datasource: str) -> timeseries.Panel:
     if datasource == "azuremonitor":
         target = azuremonitor_logs_query(query=query)
+    elif datasource == "azuredataindexplorer":
+        target = azuredataindexplorer_query(query=query)
     else:
         raise ValueError(f"Unsupported data source: {datasource}")
-    
+
     return (
         default_timeseries()
         .title("Input delay per app (p80)")
@@ -19,9 +21,11 @@ def app_input_delay_per_app_timeseries(query: str, datasource: str) -> timeserie
 def app_cpu_usage_timeseries(query: str, datasource: str) -> timeseries.Panel:
     if datasource == "azuremonitor":
         target = azuremonitor_logs_query(query=query)
+    elif datasource == "azuredataindexplorer":
+        target = azuredataindexplorer_query(query=query)
     else:
         raise ValueError(f"Unsupported data source: {datasource}")
-    
+
     return (
         default_timeseries()
         .title("CPU usage (p80)")
@@ -33,9 +37,11 @@ def app_cpu_usage_timeseries(query: str, datasource: str) -> timeseries.Panel:
 def app_memory_usage_timeseries(query: str, datasource: str) -> timeseries.Panel:
     if datasource == "azuremonitor":
         target = azuremonitor_logs_query(query=query)
+    elif datasource == "azuredataindexplorer":
+        target = azuredataindexplorer_query(query=query)
     else:
         raise ValueError(f"Unsupported data source: {datasource}")
-    
+
     return (
         default_timeseries()
         .title("Memory usage (p80)")
@@ -47,9 +53,11 @@ def app_memory_usage_timeseries(query: str, datasource: str) -> timeseries.Panel
 def app_disk_ios_timeseries(query: str, datasource: str) -> timeseries.Panel:
     if datasource == "azuremonitor":
         target = azuremonitor_logs_query(query=query)
+    elif datasource == "azuredataindexplorer":
+        target = azuredataindexplorer_query(query=query)
     else:
         raise ValueError(f"Unsupported data source: {datasource}")
-    
+
     return (
         default_timeseries()
         .title("Disk IOs (sum)")
@@ -60,9 +68,11 @@ def app_disk_ios_timeseries(query: str, datasource: str) -> timeseries.Panel:
 def app_network_throughput_timeseries(query: str, datasource: str) -> timeseries.Panel:
     if datasource == "azuremonitor":
         target = azuremonitor_logs_query(query=query)
+    elif datasource == "azuredataindexplorer":
+        target = azuredataindexplorer_query(query=query)
     else:
         raise ValueError(f"Unsupported data source: {datasource}")
-    
+
     return (
         default_timeseries()
         .title("Network thruput (p80)")
@@ -74,9 +84,11 @@ def app_network_throughput_timeseries(query: str, datasource: str) -> timeseries
 def app_gpu_usage_timeseries(query: str, datasource: str) -> timeseries.Panel:
     if datasource == "azuremonitor":
         target = azuremonitor_logs_query(query=query)
+    elif datasource == "azuredataindexplorer":
+        target = azuredataindexplorer_query(query=query)
     else:
         raise ValueError(f"Unsupported data source: {datasource}")
-    
+
     return (
         default_timeseries()
         .title("GPU usage (p80)")
@@ -88,9 +100,11 @@ def app_gpu_usage_timeseries(query: str, datasource: str) -> timeseries.Panel:
 def app_gpu_memory_timeseries(query: str, datasource: str) -> timeseries.Panel:
     if datasource == "azuremonitor":
         target = azuremonitor_logs_query(query=query)
+    elif datasource == "azuredataindexplorer":
+        target = azuredataindexplorer_query(query=query)
     else:
         raise ValueError(f"Unsupported data source: {datasource}")
-    
+
     return (
         default_timeseries()
         .title("GPU memory (p80)")
@@ -102,9 +116,11 @@ def app_gpu_memory_timeseries(query: str, datasource: str) -> timeseries.Panel:
 def app_handle_count_timeseries(query: str, datasource: str) -> timeseries.Panel:
     if datasource == "azuremonitor":
         target = azuremonitor_logs_query(query=query)
+    elif datasource == "azuredataindexplorer":
+        target = azuredataindexplorer_query(query=query)
     else:
         raise ValueError(f"Unsupported data source: {datasource}")
-    
+
     return (
         default_timeseries()
         .title("Handle count (sum)")
@@ -115,9 +131,11 @@ def app_handle_count_timeseries(query: str, datasource: str) -> timeseries.Panel
 def app_thread_count_timeseries(query: str, datasource: str) -> timeseries.Panel:
     if datasource == "azuremonitor":
         target = azuremonitor_logs_query(query=query)
+    elif datasource == "azuredataindexplorer":
+        target = azuredataindexplorer_query(query=query)
     else:
         raise ValueError(f"Unsupported data source: {datasource}")
-    
+
     return (
         default_timeseries()
         .title("Thread count (sum)")
@@ -128,9 +146,11 @@ def app_thread_count_timeseries(query: str, datasource: str) -> timeseries.Panel
 def app_errors_hangs_timeseries(query: str, datasource: str) -> timeseries.Panel:
     if datasource == "azuremonitor":
         target = azuremonitor_logs_query(query=query)
+    elif datasource == "azuredataindexplorer":
+        target = azuredataindexplorer_query(query=query)
     else:
         raise ValueError(f"Unsupported data source: {datasource}")
-    
+
     return (
         default_timeseries()
         .title("Errors & Hangs over time (sum)")

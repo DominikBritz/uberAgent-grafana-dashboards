@@ -5,6 +5,7 @@ from grafana_foundation_sdk.builders import (
     dashboard,
     common as common_builder,
     azuremonitor,
+    azuredataindexplorer,
 )
 from grafana_foundation_sdk.models import common
 
@@ -16,6 +17,18 @@ def azuremonitor_logs_query(query: str) -> azuremonitor.AzureLogsQuery:
         .dashboard_time(False)
         .result_format("logs")
         .time_column("TimeGenerated")
+    )
+
+
+def azuredataindexplorer_query(query: str) -> azuredataindexplorer.AzureDataExplorerQuery:
+    return (
+        azuredataindexplorer.AzureDataExplorerQuery()
+        .query(query)
+        .cluster_uri("$cluster")
+        .database("$database")
+        .query_source("raw")
+        .query_type("KQL")
+        .result_format("table")
     )
 
 

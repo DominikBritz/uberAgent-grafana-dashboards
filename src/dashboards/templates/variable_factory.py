@@ -25,10 +25,11 @@ def custom_variable(name: str, label: str, options: list[str], default: str = ""
 
 def datasource_variable(name: str, label: str, datasource_type: str) -> dashboard.DatasourceVariable:
     """Create a datasource variable."""
-    return (
+    var = (
         dashboard.DatasourceVariable(name)
         .label(label)
         .type(datasource_type)
         .multi(False)
     )
+    return var
 

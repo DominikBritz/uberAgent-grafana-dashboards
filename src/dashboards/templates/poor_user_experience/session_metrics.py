@@ -1,13 +1,15 @@
 from grafana_foundation_sdk.builders import timeseries, azuremonitor
 from grafana_foundation_sdk.models.dashboard import DataSourceRef
-from templates.panel_factory import azuremonitor_logs_query, default_timeseries
+from templates.panel_factory import azuremonitor_logs_query, azuredataindexplorer_query, default_timeseries
 
 def session_delay_per_session_timeseries(query: str, datasource: str) -> timeseries.Panel:
     if datasource == "azuremonitor":
         target = azuremonitor_logs_query(query=query)
+    elif datasource == "azuredataindexplorer":
+        target = azuredataindexplorer_query(query=query)
     else:
         raise ValueError(f"Unsupported data source: {datasource}")
-    
+
     return (
         default_timeseries()
         .title("Delay per session over time")
@@ -22,9 +24,11 @@ def session_delay_per_session_timeseries(query: str, datasource: str) -> timeser
 def session_protocol_latency_timeseries(query: str, datasource: str) -> timeseries.Panel:
     if datasource == "azuremonitor":
         target = azuremonitor_logs_query(query=query)
+    elif datasource == "azuredataindexplorer":
+        target = azuredataindexplorer_query(query=query)
     else:
         raise ValueError(f"Unsupported data source: {datasource}")
-    
+
     return (
         default_timeseries()
         .title("Protocol latency")
@@ -36,9 +40,11 @@ def session_protocol_latency_timeseries(query: str, datasource: str) -> timeseri
 def session_ica_rtt_timeseries(query: str, datasource: str) -> timeseries.Panel:
     if datasource == "azuremonitor":
         target = azuremonitor_logs_query(query=query)
+    elif datasource == "azuredataindexplorer":
+        target = azuredataindexplorer_query(query=query)
     else:
         raise ValueError(f"Unsupported data source: {datasource}")
-    
+
     return (
         default_timeseries()
         .title("ICA RTT")
@@ -50,9 +56,11 @@ def session_ica_rtt_timeseries(query: str, datasource: str) -> timeseries.Panel:
 def session_input_delay_timeseries(query: str, datasource: str) -> timeseries.Panel:
     if datasource == "azuremonitor":
         target = azuremonitor_logs_query(query=query)
+    elif datasource == "azuredataindexplorer":
+        target = azuredataindexplorer_query(query=query)
     else:
         raise ValueError(f"Unsupported data source: {datasource}")
-    
+
     return (
         default_timeseries()
         .title("Input delay")

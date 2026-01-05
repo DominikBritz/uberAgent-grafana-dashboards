@@ -76,15 +76,12 @@ def default_table() -> table.Panel:
         table.Panel()
         .height(10)
         .span(24)
-        .options(
-            table.TableOptions()
-            .cell_height("sm")
-            .show_header(True)
-            .footer(
-                table.TableFooterOptions()
-                .count_rows(False)
-                .show(False)
-            )
+        .cell_height(common.TableCellHeight.SM)
+        .show_header(True)
+        .footer(
+            common_builder.TableFooterOptions()
+            .count_rows(False)
+            .show(False)
         )
     )
 
